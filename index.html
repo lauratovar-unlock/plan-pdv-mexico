@@ -1,0 +1,268 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Plan de conversión PDV México</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">
+<style>
+:root{
+  --ground:#F2F4F7; --surface:#FFFFFF; --ink:#141C26; --muted:#5A6674; --line:#DAE0E7; --soft:#E9EDF2;
+  --accent:#2344C4; --accent-2:#6F86E6; --accent-3:#B7C4F4; --base:#3B4756;
+  --ok:#17744A; --ok-bg:#E1F2E8; --mid:#8F5500; --mid-bg:#FAEBD3; --hard:#AE2418; --hard-bg:#FBE5E2;
+  --done:#3B4756; --done-bg:#E9EDF2;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0E141B; --surface:#151E28; --ink:#E5EBF1; --muted:#95A2B0; --line:#283441; --soft:#1C2733;
+    --accent:#88A0FF; --accent-2:#5670D6; --accent-3:#34467F; --base:#C3CDD8;
+    --ok:#6BD6A0; --ok-bg:#12301F; --mid:#F1B862; --mid-bg:#37270D; --hard:#FF8C80; --hard-bg:#3B1512;
+    --done:#C3CDD8; --done-bg:#1F2B37;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0E141B; --surface:#151E28; --ink:#E5EBF1; --muted:#95A2B0; --line:#283441; --soft:#1C2733;
+  --accent:#88A0FF; --accent-2:#5670D6; --accent-3:#34467F; --base:#C3CDD8;
+  --ok:#6BD6A0; --ok-bg:#12301F; --mid:#F1B862; --mid-bg:#37270D; --hard:#FF8C80; --hard-bg:#3B1512;
+  --done:#C3CDD8; --done-bg:#1F2B37;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:28px 56px;display:flex;flex-direction:column;gap:36px}
+h1,h2{font-stretch:108%;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:800;line-height:1.1}
+h2{font-size:1.2rem;font-weight:750}
+.eyebrow{font-size:.74rem;font-weight:650;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-stretch:90%}
+header{display:flex;flex-direction:column;gap:10px}
+header p{margin:0;color:var(--muted);max-width:62ch}
+section{display:flex;flex-direction:column;gap:14px}
+.sub{margin:0;color:var(--muted);font-size:.9rem;max-width:68ch}
+
+/* scenario switch + calendar */
+.picker{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:14px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{font:inherit;font-stretch:95%;font-weight:600;font-size:.9rem;border:1px solid var(--line);background:var(--ground);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.seg button b{font-weight:800;color:var(--accent)}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.seg button[aria-pressed="true"] b{color:var(--surface)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.day{border:1px dashed var(--line);border-radius:7px;padding:6px 4px;text-align:center;display:flex;flex-direction:column;gap:1px;color:var(--muted);min-width:0}
+.day .dn{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;font-stretch:88%}
+.day .dd{font-size:1.05rem;font-weight:700}
+.day .dt{font-size:.66rem;font-stretch:85%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.day.on{border-style:solid;border-color:var(--accent);background:var(--accent-3);color:var(--ink)}
+.day.extra.on{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.day.today .dt{font-weight:700}
+.pickernote{font-size:.82rem;color:var(--muted);margin:0}
+
+/* team tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.tile .v{font-size:1.9rem;font-weight:800;font-stretch:105%;line-height:1.1}
+.tile .v small{font-size:.9rem;font-weight:600;color:var(--muted)}
+.tile .d{font-size:.82rem;color:var(--muted)}
+.tile.hl{border-color:var(--accent)}
+.tile.hl .v{color:var(--accent)}
+
+/* main table */
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.9rem}
+th,td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--soft);white-space:nowrap}
+thead th{font-weight:650;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-stretch:88%;background:var(--surface);vertical-align:bottom}
+thead tr.grp th{border-bottom:0;padding-bottom:0;color:var(--ink)}
+thead th .o{display:block;text-transform:none;letter-spacing:0;font-weight:500}
+th.name,td.name{text-align:left;position:sticky;left:0;background:var(--surface);z-index:1}
+td.name{font-weight:600;font-stretch:95%}
+tbody tr:last-child td{border-bottom:0}
+.sep{border-left:1px solid var(--line)}
+.pace{color:var(--muted)}
+.need{display:inline-flex;flex-direction:column;align-items:center;min-width:52px;border-radius:6px;padding:3px 6px;line-height:1.15}
+.need .n{font-weight:800;font-size:1rem}
+.need .x{font-size:.7rem;font-weight:600}
+.need.ok{background:var(--ok-bg);color:var(--ok)}
+.need.mid{background:var(--mid-bg);color:var(--mid)}
+.need.hard{background:var(--hard-bg);color:var(--hard)}
+.need.done{background:var(--done-bg);color:var(--done)}
+.pct{font-weight:700}
+.proj{font-weight:800;color:var(--accent)}
+.proj small{color:var(--muted);font-weight:600;font-size:.72rem;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.82rem;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+/* comparison */
+.cmp{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+.row{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) auto;gap:12px;align-items:center}
+.row .nm{font-size:.86rem;font-weight:600;font-stretch:95%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{position:relative;height:14px;background:var(--soft);border-radius:4px;overflow:hidden}
+.track i{position:absolute;top:0;bottom:0;display:block}
+.track .b0{background:var(--base)} .track .bA{background:var(--accent)} .track .bB{background:var(--accent-2)} .track .bC{background:var(--accent-3)}
+.track .tick{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--line)}
+.row .vals{font-size:.82rem;white-space:nowrap;color:var(--muted)}
+.row .vals b{color:var(--ink);font-weight:750}
+.row.sel .vals b.cur{color:var(--accent)}
+.axis{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) auto;gap:12px;font-size:.7rem;color:var(--muted)}
+.axis .sc{display:flex;justify-content:space-between}
+.axis .ph{visibility:hidden;font-size:.82rem}
+
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.howto ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.foot{font-size:.78rem;color:var(--muted);max-width:80ch;margin:0}
+
+@media (max-width:560px){
+  .wrap{padding-inline:16px}
+  .row,.axis{grid-template-columns:minmax(0,1fr) auto}
+  .row .nm{grid-column:1 / -1}
+  .row .track{grid-column:1}
+  .axis .nmh{display:none}
+  .picker{position:static}
+  .day .dt{font-size:.6rem}
+}
+@media (prefers-reduced-motion:no-preference){ .track i{transition:width .25s ease,left .25s ease} }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">M0 / M1 / M2 · septiembre 2026</span>
+    <h1>Plan de conversión diaria · PDV México · cierre de septiembre</h1>
+    <p>Datos cargados hasta el 23/9. Hoy, 24/9, cuenta como día de trabajo, así que lo que conviertan hoy baja lo que falta.</p>
+  </header>
+
+  <div class="picker" role="group" aria-label="Escenario">
+    <div class="seg" id="seg">
+      <button type="button" id="sc-A" data-k="A" aria-pressed="true"><b>A</b> Solo días hábiles · 4 días</button>
+      <button type="button" id="sc-B" data-k="B" aria-pressed="false"><b>B</b> + sábado 26 · 5 días</button>
+      <button type="button" id="sc-C" data-k="C" aria-pressed="false"><b>C</b> + sábado 26 y lunes 28 · 6 días</button>
+    </div>
+    <div class="cal" id="cal"></div>
+    <p class="pickernote" id="pnote"></p>
+  </div>
+
+  <section>
+    <h2>Equipo</h2>
+    <div class="tiles" id="tiles"></div>
+    <p class="sub" id="teamnote"></p>
+  </section>
+
+  <section>
+    <h2>Cuánto necesita cada agente por día</h2>
+    <p class="sub">Ordenado de más atrasado a más adelantado según el % Total de hoy. Cada casilla muestra cuántas conversiones por día necesita para llegar a su objetivo y cuántas veces su ritmo actual es eso.</p>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--ok-bg);outline:1px solid var(--ok)"></i>Alcanzable a su ritmo (hasta 1,0×)</span>
+      <span><i class="sw" style="background:var(--mid-bg);outline:1px solid var(--mid)"></i>Exigente (1,0× a 1,5×)</span>
+      <span><i class="sw" style="background:var(--hard-bg);outline:1px solid var(--hard)"></i>Muy difícil (más de 1,5×)</span>
+      <span><i class="sw" style="background:var(--done-bg);outline:1px solid var(--done)"></i>✓ Cumplido</span>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr class="grp">
+            <th class="name" rowspan="2">Agente</th>
+            <th rowspan="2">% Total<span class="o">hoy</span></th>
+            <th colspan="3" class="sep">Ritmo actual por día</th>
+            <th colspan="3" class="sep">Necesita por día <span id="thsc"></span></th>
+            <th rowspan="2" class="sep">Proyección<span class="o">a su ritmo</span></th>
+          </tr>
+          <tr>
+            <th class="sep">M0</th><th>M1</th><th>M2</th>
+            <th class="sep">M0<span class="o">obj 50</span></th><th>M1<span class="o">obj 30</span></th><th>M2<span class="o">obj 21</span></th>
+          </tr>
+        </thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Qué pasa si trabajan el sábado, o el sábado y el lunes</h2>
+    <p class="sub">% Total proyectado al 30/9 si cada agente mantiene el ritmo que trae. Tramo oscuro: % de hoy. Luego lo que suma trabajando A, B y C.</p>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--base)"></i>Hoy</span>
+      <span><i class="sw" style="background:var(--accent)"></i>+ A (4 días)</span>
+      <span><i class="sw" style="background:var(--accent-2)"></i>+ sábado (B)</span>
+      <span><i class="sw" style="background:var(--accent-3)"></i>+ lunes (C)</span>
+    </div>
+    <div class="cmp" id="cmp"></div>
+  </section>
+
+  <section class="howto">
+    <h2>Cómo leerlo</h2>
+    <ul>
+      <li>El % Total pondera M0 al 30%, M1 al 40% y M2 al 30%. Cada métrica topa en 100%: pasarse en una no compensa las otras.</li>
+      <li>Ritmo actual = conversiones acumuladas ÷ días trabajados (17 días hábiles del 1 al 23/9; Yanda empezó el 14/9, 8 días).</li>
+      <li>Necesita por día = lo que falta para el objetivo ÷ días que quedan, redondeado hacia arriba.</li>
+      <li>El multiplicador compara eso con su ritmo: 2,0× significa convertir el doble de lo que viene haciendo por día.</li>
+    </ul>
+  </section>
+
+  <p class="foot">Proyección del equipo: por métrica se suma lo proyectado de cada agente, topado en su objetivo individual, y se divide por el objetivo del equipo (950 / 570 / 399); luego se pondera 30/40/30. "Necesita por día (equipo)" = (objetivo del equipo − acumulado) ÷ días, redondeado hacia arriba; la suma de las necesidades individuales es algo mayor porque quien ya cumplió una métrica no compensa a los demás.</p>
+</div>
+
+<script>
+const DATA = {"agents": [{"name": "Yanda Mosquera", "cur": [9, 13, 13], "days": 8, "pace": [1.1, 1.6, 1.6], "pct": 41, "sc": {"A": {"m": [{"falta": 41, "need": 11, "eff": 9.8, "cls": "hard"}, {"falta": 17, "need": 5, "eff": 3.1, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.2, "cls": "mid"}], "proj": [13.5, 19.5, 19.5], "projPct": 62, "projMet": [27, 65, 93]}, "B": {"m": [{"falta": 41, "need": 9, "eff": 8.0, "cls": "hard"}, {"falta": 17, "need": 4, "eff": 2.5, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.2, "cls": "mid"}], "proj": [14.6, 21.1, 21.1], "projPct": 67, "projMet": [29, 70, 100]}, "C": {"m": [{"falta": 41, "need": 7, "eff": 6.2, "cls": "hard"}, {"falta": 17, "need": 3, "eff": 1.8, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.2, "cls": "mid"}], "proj": [15.8, 22.8, 22.8], "projPct": 70, "projMet": [32, 76, 100]}}, "maxEff": {"A": 9.8, "B": 8.0, "C": 6.2}}, {"name": "Florencia Rey", "cur": [23, 14, 8], "days": 17, "pace": [1.4, 0.8, 0.5], "pct": 44, "sc": {"A": {"m": [{"falta": 27, "need": 7, "eff": 5.2, "cls": "hard"}, {"falta": 16, "need": 4, "eff": 4.9, "cls": "hard"}, {"falta": 13, "need": 4, "eff": 8.5, "cls": "hard"}], "proj": [28.4, 17.3, 9.9], "projPct": 54, "projMet": [57, 58, 47]}, "B": {"m": [{"falta": 27, "need": 6, "eff": 4.4, "cls": "hard"}, {"falta": 16, "need": 4, "eff": 4.9, "cls": "hard"}, {"falta": 13, "need": 3, "eff": 6.4, "cls": "hard"}], "proj": [29.8, 18.1, 10.4], "projPct": 57, "projMet": [60, 60, 49]}, "C": {"m": [{"falta": 27, "need": 5, "eff": 3.7, "cls": "hard"}, {"falta": 16, "need": 3, "eff": 3.6, "cls": "hard"}, {"falta": 13, "need": 3, "eff": 6.4, "cls": "hard"}], "proj": [31.1, 18.9, 10.8], "projPct": 59, "projMet": [62, 63, 52]}}, "maxEff": {"A": 8.5, "B": 6.4, "C": 6.4}}, {"name": "Ariana Anfuso", "cur": [23, 16, 11], "days": 17, "pace": [1.4, 0.9, 0.6], "pct": 51, "sc": {"A": {"m": [{"falta": 27, "need": 7, "eff": 5.2, "cls": "hard"}, {"falta": 14, "need": 4, "eff": 4.2, "cls": "hard"}, {"falta": 10, "need": 3, "eff": 4.6, "cls": "hard"}], "proj": [28.4, 19.8, 13.6], "projPct": 63, "projMet": [57, 66, 65]}, "B": {"m": [{"falta": 27, "need": 6, "eff": 4.4, "cls": "hard"}, {"falta": 14, "need": 3, "eff": 3.2, "cls": "hard"}, {"falta": 10, "need": 2, "eff": 3.1, "cls": "hard"}], "proj": [29.8, 20.7, 14.2], "projPct": 66, "projMet": [60, 69, 68]}, "C": {"m": [{"falta": 27, "need": 5, "eff": 3.7, "cls": "hard"}, {"falta": 14, "need": 3, "eff": 3.2, "cls": "hard"}, {"falta": 10, "need": 2, "eff": 3.1, "cls": "hard"}], "proj": [31.1, 21.6, 14.9], "projPct": 69, "projMet": [62, 72, 71]}}, "maxEff": {"A": 5.2, "B": 4.4, "C": 3.7}}, {"name": "Candela Rodriguez", "cur": [13, 18, 14], "days": 17, "pace": [0.8, 1.1, 0.8], "pct": 52, "sc": {"A": {"m": [{"falta": 37, "need": 10, "eff": 13.1, "cls": "hard"}, {"falta": 12, "need": 3, "eff": 2.8, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [16.1, 22.2, 17.3], "projPct": 64, "projMet": [32, 74, 82]}, "B": {"m": [{"falta": 37, "need": 8, "eff": 10.5, "cls": "hard"}, {"falta": 12, "need": 3, "eff": 2.8, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [16.8, 23.3, 18.1], "projPct": 67, "projMet": [34, 78, 86]}, "C": {"m": [{"falta": 37, "need": 7, "eff": 9.2, "cls": "hard"}, {"falta": 12, "need": 2, "eff": 1.9, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [17.6, 24.4, 18.9], "projPct": 70, "projMet": [35, 81, 90]}}, "maxEff": {"A": 13.1, "B": 10.5, "C": 9.2}}, {"name": "Tomas Sanchez Castro", "cur": [24, 16, 12], "days": 17, "pace": [1.4, 0.9, 0.7], "pct": 53, "sc": {"A": {"m": [{"falta": 26, "need": 7, "eff": 5.0, "cls": "hard"}, {"falta": 14, "need": 4, "eff": 4.2, "cls": "hard"}, {"falta": 9, "need": 3, "eff": 4.2, "cls": "hard"}], "proj": [29.6, 19.8, 14.8], "projPct": 65, "projMet": [59, 66, 71]}, "B": {"m": [{"falta": 26, "need": 6, "eff": 4.2, "cls": "hard"}, {"falta": 14, "need": 3, "eff": 3.2, "cls": "hard"}, {"falta": 9, "need": 2, "eff": 2.8, "cls": "hard"}], "proj": [31.1, 20.7, 15.5], "projPct": 68, "projMet": [62, 69, 74]}, "C": {"m": [{"falta": 26, "need": 5, "eff": 3.5, "cls": "hard"}, {"falta": 14, "need": 3, "eff": 3.2, "cls": "hard"}, {"falta": 9, "need": 2, "eff": 2.8, "cls": "hard"}], "proj": [32.5, 21.6, 16.2], "projPct": 72, "projMet": [65, 72, 77]}}, "maxEff": {"A": 5.0, "B": 4.2, "C": 3.5}}, {"name": "Candela Ehrt", "cur": [34, 13, 11], "days": 17, "pace": [2.0, 0.8, 0.6], "pct": 53, "sc": {"A": {"m": [{"falta": 16, "need": 4, "eff": 2.0, "cls": "hard"}, {"falta": 17, "need": 5, "eff": 6.5, "cls": "hard"}, {"falta": 10, "need": 3, "eff": 4.6, "cls": "hard"}], "proj": [42.0, 16.1, 13.6], "projPct": 66, "projMet": [84, 54, 65]}, "B": {"m": [{"falta": 16, "need": 4, "eff": 2.0, "cls": "hard"}, {"falta": 17, "need": 4, "eff": 5.2, "cls": "hard"}, {"falta": 10, "need": 2, "eff": 3.1, "cls": "hard"}], "proj": [44.0, 16.8, 14.2], "projPct": 69, "projMet": [88, 56, 68]}, "C": {"m": [{"falta": 16, "need": 3, "eff": 1.5, "cls": "mid"}, {"falta": 17, "need": 3, "eff": 3.9, "cls": "hard"}, {"falta": 10, "need": 2, "eff": 3.1, "cls": "hard"}], "proj": [46.0, 17.6, 14.9], "projPct": 72, "projMet": [92, 59, 71]}}, "maxEff": {"A": 6.5, "B": 5.2, "C": 3.9}}, {"name": "Jennifer Ledesma", "cur": [21, 21, 9], "days": 17, "pace": [1.2, 1.2, 0.5], "pct": 53, "sc": {"A": {"m": [{"falta": 29, "need": 8, "eff": 6.5, "cls": "hard"}, {"falta": 9, "need": 3, "eff": 2.4, "cls": "hard"}, {"falta": 12, "need": 3, "eff": 5.7, "cls": "hard"}], "proj": [25.9, 25.9, 11.1], "projPct": 66, "projMet": [52, 86, 53]}, "B": {"m": [{"falta": 29, "need": 6, "eff": 4.9, "cls": "hard"}, {"falta": 9, "need": 2, "eff": 1.6, "cls": "hard"}, {"falta": 12, "need": 3, "eff": 5.7, "cls": "hard"}], "proj": [27.2, 27.2, 11.6], "projPct": 69, "projMet": [54, 91, 55]}, "C": {"m": [{"falta": 29, "need": 5, "eff": 4.0, "cls": "hard"}, {"falta": 9, "need": 2, "eff": 1.6, "cls": "hard"}, {"falta": 12, "need": 2, "eff": 3.8, "cls": "hard"}], "proj": [28.4, 28.4, 12.2], "projPct": 72, "projMet": [57, 95, 58]}}, "maxEff": {"A": 6.5, "B": 5.7, "C": 4.0}}, {"name": "Irina Sstanley", "cur": [26, 16, 16], "days": 17, "pace": [1.5, 0.9, 0.9], "pct": 60, "sc": {"A": {"m": [{"falta": 24, "need": 6, "eff": 3.9, "cls": "hard"}, {"falta": 14, "need": 4, "eff": 4.2, "cls": "hard"}, {"falta": 5, "need": 2, "eff": 2.1, "cls": "hard"}], "proj": [32.1, 19.8, 19.8], "projPct": 74, "projMet": [64, 66, 94]}, "B": {"m": [{"falta": 24, "need": 5, "eff": 3.3, "cls": "hard"}, {"falta": 14, "need": 3, "eff": 3.2, "cls": "hard"}, {"falta": 5, "need": 1, "eff": 1.1, "cls": "mid"}], "proj": [33.6, 20.7, 20.7], "projPct": 77, "projMet": [67, 69, 99]}, "C": {"m": [{"falta": 24, "need": 4, "eff": 2.6, "cls": "hard"}, {"falta": 14, "need": 3, "eff": 3.2, "cls": "hard"}, {"falta": 5, "need": 1, "eff": 1.1, "cls": "mid"}], "proj": [35.2, 21.6, 21.6], "projPct": 80, "projMet": [70, 72, 100]}}, "maxEff": {"A": 4.2, "B": 3.3, "C": 3.2}}, {"name": "Carolina Venguiarrutti", "cur": [23, 17, 19], "days": 17, "pace": [1.4, 1.0, 1.1], "pct": 64, "sc": {"A": {"m": [{"falta": 27, "need": 7, "eff": 5.2, "cls": "hard"}, {"falta": 13, "need": 4, "eff": 4.0, "cls": "hard"}, {"falta": 2, "need": 1, "eff": 0.9, "cls": "ok"}], "proj": [28.4, 21.0, 23.5], "projPct": 75, "projMet": [57, 70, 100]}, "B": {"m": [{"falta": 27, "need": 6, "eff": 4.4, "cls": "hard"}, {"falta": 13, "need": 3, "eff": 3.0, "cls": "hard"}, {"falta": 2, "need": 1, "eff": 0.9, "cls": "ok"}], "proj": [29.8, 22.0, 24.6], "projPct": 77, "projMet": [60, 73, 100]}, "C": {"m": [{"falta": 27, "need": 5, "eff": 3.7, "cls": "hard"}, {"falta": 13, "need": 3, "eff": 3.0, "cls": "hard"}, {"falta": 2, "need": 1, "eff": 0.9, "cls": "ok"}], "proj": [31.1, 23.0, 25.7], "projPct": 79, "projMet": [62, 77, 100]}}, "maxEff": {"A": 5.2, "B": 4.4, "C": 3.7}}, {"name": "Bella Falcones", "cur": [35, 19, 13], "days": 17, "pace": [2.1, 1.1, 0.8], "pct": 65, "sc": {"A": {"m": [{"falta": 15, "need": 4, "eff": 1.9, "cls": "hard"}, {"falta": 11, "need": 3, "eff": 2.7, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 2.6, "cls": "hard"}], "proj": [43.2, 23.5, 16.1], "projPct": 80, "projMet": [86, 78, 76]}, "B": {"m": [{"falta": 15, "need": 3, "eff": 1.5, "cls": "mid"}, {"falta": 11, "need": 3, "eff": 2.7, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 2.6, "cls": "hard"}], "proj": [45.3, 24.6, 16.8], "projPct": 84, "projMet": [91, 82, 80]}, "C": {"m": [{"falta": 15, "need": 3, "eff": 1.5, "cls": "mid"}, {"falta": 11, "need": 2, "eff": 1.8, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 2.6, "cls": "hard"}], "proj": [47.4, 25.7, 17.6], "projPct": 88, "projMet": [95, 86, 84]}}, "maxEff": {"A": 2.7, "B": 2.7, "C": 2.6}}, {"name": "Ismael Nazareno Barreto", "cur": [29, 22, 14], "days": 17, "pace": [1.7, 1.3, 0.8], "pct": 67, "sc": {"A": {"m": [{"falta": 21, "need": 6, "eff": 3.5, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [35.8, 27.2, 17.3], "projPct": 82, "projMet": [72, 91, 82]}, "B": {"m": [{"falta": 21, "need": 5, "eff": 2.9, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [37.5, 28.5, 18.1], "projPct": 86, "projMet": [75, 95, 86]}, "C": {"m": [{"falta": 21, "need": 4, "eff": 2.3, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [39.2, 29.8, 18.9], "projPct": 90, "projMet": [78, 99, 90]}}, "maxEff": {"A": 3.5, "B": 2.9, "C": 2.4}}, {"name": "Santino Garcia", "cur": [17, 20, 22], "days": 17, "pace": [1.0, 1.2, 1.3], "pct": 67, "sc": {"A": {"m": [{"falta": 33, "need": 9, "eff": 9.0, "cls": "hard"}, {"falta": 10, "need": 3, "eff": 2.5, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [21.0, 24.7, 27.2], "projPct": 76, "projMet": [42, 82, 100]}, "B": {"m": [{"falta": 33, "need": 7, "eff": 7.0, "cls": "hard"}, {"falta": 10, "need": 2, "eff": 1.7, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [22.0, 25.9, 28.5], "projPct": 78, "projMet": [44, 86, 100]}, "C": {"m": [{"falta": 33, "need": 6, "eff": 6.0, "cls": "hard"}, {"falta": 10, "need": 2, "eff": 1.7, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [23.0, 27.1, 29.8], "projPct": 80, "projMet": [46, 90, 100]}}, "maxEff": {"A": 9.0, "B": 7.0, "C": 6.0}}, {"name": "Aylen Jaubrena", "cur": [30, 22, 14], "days": 17, "pace": [1.8, 1.3, 0.8], "pct": 67, "sc": {"A": {"m": [{"falta": 20, "need": 5, "eff": 2.8, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [37.1, 27.2, 17.3], "projPct": 83, "projMet": [74, 91, 82]}, "B": {"m": [{"falta": 20, "need": 4, "eff": 2.3, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [38.8, 28.5, 18.1], "projPct": 87, "projMet": [78, 95, 86]}, "C": {"m": [{"falta": 20, "need": 4, "eff": 2.3, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [40.6, 29.8, 18.9], "projPct": 91, "projMet": [81, 99, 90]}}, "maxEff": {"A": 2.8, "B": 2.4, "C": 2.4}}, {"name": "Kiara Robledo Ibarra", "cur": [26, 17, 22], "days": 17, "pace": [1.5, 1.0, 1.3], "pct": 68, "sc": {"A": {"m": [{"falta": 24, "need": 6, "eff": 3.9, "cls": "hard"}, {"falta": 13, "need": 4, "eff": 4.0, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [32.1, 21.0, 27.2], "projPct": 77, "projMet": [64, 70, 100]}, "B": {"m": [{"falta": 24, "need": 5, "eff": 3.3, "cls": "hard"}, {"falta": 13, "need": 3, "eff": 3.0, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [33.6, 22.0, 28.5], "projPct": 80, "projMet": [67, 73, 100]}, "C": {"m": [{"falta": 24, "need": 4, "eff": 2.6, "cls": "hard"}, {"falta": 13, "need": 3, "eff": 3.0, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [35.2, 23.0, 29.8], "projPct": 82, "projMet": [70, 77, 100]}}, "maxEff": {"A": 4.0, "B": 3.3, "C": 3.0}}, {"name": "Gonzalo Garbarino Ibañez", "cur": [28, 23, 15], "days": 17, "pace": [1.6, 1.4, 0.9], "pct": 69, "sc": {"A": {"m": [{"falta": 22, "need": 6, "eff": 3.6, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 1.5, "cls": "mid"}, {"falta": 6, "need": 2, "eff": 2.3, "cls": "hard"}], "proj": [34.6, 28.4, 18.5], "projPct": 85, "projMet": [69, 95, 88]}, "B": {"m": [{"falta": 22, "need": 5, "eff": 3.0, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 1.5, "cls": "mid"}, {"falta": 6, "need": 2, "eff": 2.3, "cls": "hard"}], "proj": [36.2, 29.8, 19.4], "projPct": 89, "projMet": [72, 99, 92]}, "C": {"m": [{"falta": 22, "need": 4, "eff": 2.4, "cls": "hard"}, {"falta": 7, "need": 2, "eff": 1.5, "cls": "mid"}, {"falta": 6, "need": 1, "eff": 1.1, "cls": "mid"}], "proj": [37.9, 31.1, 20.3], "projPct": 92, "projMet": [76, 100, 97]}}, "maxEff": {"A": 3.6, "B": 3.0, "C": 2.4}}, {"name": "Ismael Chantir", "cur": [26, 22, 17], "days": 17, "pace": [1.5, 1.3, 1.0], "pct": 69, "sc": {"A": {"m": [{"falta": 24, "need": 6, "eff": 3.9, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 4, "need": 1, "eff": 1.0, "cls": "ok"}], "proj": [32.1, 27.2, 21.0], "projPct": 86, "projMet": [64, 91, 100]}, "B": {"m": [{"falta": 24, "need": 5, "eff": 3.3, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 4, "need": 1, "eff": 1.0, "cls": "ok"}], "proj": [33.6, 28.5, 22.0], "projPct": 88, "projMet": [67, 95, 100]}, "C": {"m": [{"falta": 24, "need": 4, "eff": 2.6, "cls": "hard"}, {"falta": 8, "need": 2, "eff": 1.5, "cls": "hard"}, {"falta": 4, "need": 1, "eff": 1.0, "cls": "ok"}], "proj": [35.2, 29.8, 23.0], "projPct": 91, "projMet": [70, 99, 100]}}, "maxEff": {"A": 3.9, "B": 3.3, "C": 2.6}}, {"name": "Martiniano Suarez", "cur": [30, 26, 13], "days": 17, "pace": [1.8, 1.5, 0.8], "pct": 71, "sc": {"A": {"m": [{"falta": 20, "need": 5, "eff": 2.8, "cls": "hard"}, {"falta": 4, "need": 1, "eff": 0.7, "cls": "ok"}, {"falta": 8, "need": 2, "eff": 2.6, "cls": "hard"}], "proj": [37.1, 32.1, 16.1], "projPct": 85, "projMet": [74, 100, 76]}, "B": {"m": [{"falta": 20, "need": 4, "eff": 2.3, "cls": "hard"}, {"falta": 4, "need": 1, "eff": 0.7, "cls": "ok"}, {"falta": 8, "need": 2, "eff": 2.6, "cls": "hard"}], "proj": [38.8, 33.6, 16.8], "projPct": 87, "projMet": [78, 100, 80]}, "C": {"m": [{"falta": 20, "need": 4, "eff": 2.3, "cls": "hard"}, {"falta": 4, "need": 1, "eff": 0.7, "cls": "ok"}, {"falta": 8, "need": 2, "eff": 2.6, "cls": "hard"}], "proj": [40.6, 35.2, 17.6], "projPct": 89, "projMet": [81, 100, 84]}}, "maxEff": {"A": 2.8, "B": 2.6, "C": 2.6}}, {"name": "Bautista Lucchetti", "cur": [33, 28, 16], "days": 17, "pace": [1.9, 1.6, 0.9], "pct": 80, "sc": {"A": {"m": [{"falta": 17, "need": 5, "eff": 2.6, "cls": "hard"}, {"falta": 2, "need": 1, "eff": 0.6, "cls": "ok"}, {"falta": 5, "need": 2, "eff": 2.1, "cls": "hard"}], "proj": [40.8, 34.6, 19.8], "projPct": 93, "projMet": [82, 100, 94]}, "B": {"m": [{"falta": 17, "need": 4, "eff": 2.1, "cls": "hard"}, {"falta": 2, "need": 1, "eff": 0.6, "cls": "ok"}, {"falta": 5, "need": 1, "eff": 1.1, "cls": "mid"}], "proj": [42.7, 36.2, 20.7], "projPct": 95, "projMet": [85, 100, 99]}, "C": {"m": [{"falta": 17, "need": 3, "eff": 1.5, "cls": "hard"}, {"falta": 2, "need": 1, "eff": 0.6, "cls": "ok"}, {"falta": 5, "need": 1, "eff": 1.1, "cls": "mid"}], "proj": [44.6, 37.9, 21.6], "projPct": 97, "projMet": [89, 100, 100]}}, "maxEff": {"A": 2.6, "B": 2.1, "C": 1.5}}, {"name": "Denisse Sanabria", "cur": [29, 31, 16], "days": 17, "pace": [1.7, 1.8, 0.9], "pct": 80, "sc": {"A": {"m": [{"falta": 21, "need": 6, "eff": 3.5, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}, {"falta": 5, "need": 2, "eff": 2.1, "cls": "hard"}], "proj": [35.8, 38.3, 19.8], "projPct": 90, "projMet": [72, 100, 94]}, "B": {"m": [{"falta": 21, "need": 5, "eff": 2.9, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}, {"falta": 5, "need": 1, "eff": 1.1, "cls": "mid"}], "proj": [37.5, 40.1, 20.7], "projPct": 92, "projMet": [75, 100, 99]}, "C": {"m": [{"falta": 21, "need": 4, "eff": 2.3, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}, {"falta": 5, "need": 1, "eff": 1.1, "cls": "mid"}], "proj": [39.2, 41.9, 21.6], "projPct": 94, "projMet": [78, 100, 100]}}, "maxEff": {"A": 3.5, "B": 2.9, "C": 2.3}}], "team": {"cur": [479, 374, 275], "obj": [950, 570, 399], "pct": 62, "curMet": [50, 66, 69], "sc": {"A": {"days": 4, "sumNeed": [125, 56, 38], "teamNeed": [118, 49, 31], "teamPace": [28.8, 22.9, 17.0], "projMet": [63, 79, 82], "projPct": 75, "nOk": 0, "reach100": 0, "projCnt": [594, 450, 328], "cells": {"ok": 4, "mid": 2, "hard": 48, "null": 3}}, "B": {"days": 5, "sumNeed": [103, 47, 31], "teamNeed": [95, 40, 25], "teamPace": [28.8, 22.9, 17.0], "projMet": [66, 82, 85], "projPct": 78, "nOk": 0, "reach100": 0, "projCnt": [623, 468, 341], "cells": {"ok": 4, "mid": 6, "hard": 44, "null": 3}}, "C": {"days": 6, "sumNeed": [86, 42, 29], "teamNeed": [79, 33, 21], "teamPace": [28.8, 22.9, 17.0], "projMet": [69, 85, 88], "projPct": 81, "nOk": 0, "reach100": 0, "projCnt": [652, 485, 349], "cells": {"ok": 4, "mid": 8, "hard": 42, "null": 3}}}}};
+const SCN = {
+  A:{days:["24","25","29","30"],label:"A",note:"Jueves 24, viernes 25, martes 29 y miércoles 30."},
+  B:{days:["24","25","26","29","30"],label:"B",note:"Suma el sábado 26. Trabajar el lunes 28 en vez del sábado da exactamente los mismos números."},
+  C:{days:["24","25","26","28","29","30"],label:"C",note:"Suma el sábado 26 y el lunes 28 (feriado)."}
+};
+const CAL = [["jue","24","hoy"],["vie","25",""],["sáb","26","no se suele trabajar"],["dom","27","libre"],["lun","28","feriado"],["mar","29",""],["mié","30","cierre"]];
+const fmt = n => String(n).replace(".", ",");
+const pct = n => n + "%";
+let cur = "A";
+try { const s = localStorage.getItem("pdv-sc"); if (s && SCN[s]) cur = s; } catch(e) {}
+
+function renderCal(){
+  const on = SCN[cur].days;
+  document.getElementById("cal").innerHTML = CAL.map(([dn,dd,dt])=>{
+    const isOn = on.includes(dd), extra = (dd==="26"||dd==="28");
+    return `<div class="day${isOn?" on":""}${extra?" extra":""}${dd==="24"?" today":""}"><span class="dn">${dn}</span><span class="dd">${dd}</span><span class="dt">${isOn?(dt||"trabaja"):(dt||"&nbsp;")}</span></div>`;
+  }).join("");
+  document.getElementById("pnote").textContent = SCN[cur].note;
+}
+function renderTeam(){
+  const t = DATA.team, s = t.sc[cur];
+  const m = ["M0","M1","M2"];
+  let h = m.map((k,i)=>`<div class="tile"><span class="eyebrow">${k} · necesita por día</span><span class="v">${s.teamNeed[i]} <small>/ día</small></span><span class="d">Ritmo actual del equipo ${fmt(s.teamPace[i])}/día · van ${t.cur[i]} de ${t.obj[i]}</span></div>`).join("");
+  h += `<div class="tile hl"><span class="eyebrow">% Total proyectado a su ritmo</span><span class="v">${pct(s.projPct)} <small>hoy ${pct(t.pct)}</small></span><span class="d">A ${pct(t.sc.A.projPct)} · B ${pct(t.sc.B.projPct)} · C ${pct(t.sc.C.projPct)}</span></div>`;
+  document.getElementById("tiles").innerHTML = h;
+  document.getElementById("teamnote").textContent = `Con ${s.days} días, para llegar al 100% el equipo tendría que convertir ${s.teamNeed[0]} M0, ${s.teamNeed[1]} M1 y ${s.teamNeed[2]} M2 por día (sumando lo que necesita cada agente: ${s.sumNeed[0]} / ${s.sumNeed[1]} / ${s.sumNeed[2]}). A su ritmo actual cerraría en ${s.projCnt[0]} / ${s.projCnt[1]} / ${s.projCnt[2]} (contando hasta el objetivo de cada agente).`;
+}
+function needCell(m){
+  if (m.cls === null) return `<span class="need done" title="Objetivo cumplido"><span class="n">✓</span><span class="x">cumplido</span></span>`;
+  return `<span class="need ${m.cls}" title="Faltan ${m.falta}"><span class="n">${m.need}</span><span class="x">${fmt(m.eff)}×</span></span>`;
+}
+function renderTable(){
+  document.getElementById("thsc").textContent = "· escenario " + cur;
+  document.getElementById("tb").innerHTML = DATA.agents.map(a=>{
+    const s = a.sc[cur];
+    return `<tr><td class="name">${a.name}</td><td class="pct">${pct(a.pct)}</td>
+      <td class="pace sep">${fmt(a.pace[0])}</td><td class="pace">${fmt(a.pace[1])}</td><td class="pace">${fmt(a.pace[2])}</td>
+      <td class="sep">${needCell(s.m[0])}</td><td>${needCell(s.m[1])}</td><td>${needCell(s.m[2])}</td>
+      <td class="proj sep">${pct(s.projPct)}<small>+${s.projPct-a.pct} pts</small></td></tr>`;
+  }).join("");
+}
+function renderCmp(){
+  const ticks = [25,50,75].map(v=>`<span class="tick" style="left:${v}%"></span>`).join("");
+  let h = `<div class="axis"><span class="nmh"></span><span class="sc"><span>0%</span><span>50%</span><span>100%</span></span><span class="ph">00% · 00% · 00%</span></div>`;
+  h += DATA.agents.map(a=>{
+    const p0=a.pct, pA=a.sc.A.projPct, pB=a.sc.B.projPct, pC=a.sc.C.projPct;
+    const seg=(cls,l,r)=>`<i class="${cls}" style="left:${l}%;width:${Math.max(0,r-l)}%"></i>`;
+    const b = k => `<b${k===cur?' class="cur"':''}>${a.sc[k].projPct}%</b>`;
+    return `<div class="row"><span class="nm">${a.name}</span><span class="track">${seg("b0",0,p0)}${seg("bA",p0,pA)}${seg("bB",pA,pB)}${seg("bC",pB,pC)}${ticks}</span><span class="vals">${p0}% → ${b("A")} · ${b("B")} · ${b("C")}</span></div>`;
+  }).join("");
+  document.getElementById("cmp").innerHTML = h;
+}
+function render(){
+  document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.k===cur?"true":"false"));
+  renderCal(); renderTeam(); renderTable(); renderCmp();
+}
+document.getElementById("seg").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  cur = b.dataset.k; try { localStorage.setItem("pdv-sc", cur); } catch(e) {}
+  render();
+});
+render();
+</script>
+
+</body></html>
