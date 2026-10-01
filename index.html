@@ -1,4 +1,8 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Plan de conversión PDV México</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -9,6 +13,7 @@
   --accent:#2344C4; --accent-2:#6F86E6; --accent-3:#B7C4F4; --base:#3B4756;
   --ok:#17744A; --ok-bg:#E1F2E8; --mid:#8F5500; --mid-bg:#FAEBD3; --hard:#AE2418; --hard-bg:#FBE5E2;
   --done:#3B4756; --done-bg:#E9EDF2;
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -27,47 +32,52 @@
   --done:#C3CDD8; --done-bg:#1F2B37;
 }
 *{box-sizing:border-box}
-body{background:var(--ground);color:var(--ink);font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums}
 .wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:28px 56px;display:flex;flex-direction:column;gap:36px}
 h1,h2{font-stretch:108%;text-wrap:balance;margin:0;letter-spacing:-.01em}
 h1{font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:800;line-height:1.1}
 h2{font-size:1.2rem;font-weight:750}
 .eyebrow{font-size:.74rem;font-weight:650;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-stretch:90%}
 header{display:flex;flex-direction:column;gap:10px}
-header p{margin:0;color:var(--muted);max-width:62ch}
+header p{margin:0;color:var(--muted);max-width:66ch}
 section{display:flex;flex-direction:column;gap:14px}
-.sub{margin:0;color:var(--muted);font-size:.9rem;max-width:68ch}
+.sub{margin:0;color:var(--muted);font-size:.9rem;max-width:70ch}
+.status{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-size:.82rem;font-weight:600;border-radius:999px;padding:4px 12px;background:var(--mid-bg);color:var(--mid)}
+.status.live{background:var(--ok-bg);color:var(--ok)}
 
-/* scenario switch + calendar */
-.picker{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:14px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-.seg{display:flex;gap:6px;flex-wrap:wrap}
-.seg button{font:inherit;font-stretch:95%;font-weight:600;font-size:.9rem;border:1px solid var(--line);background:var(--ground);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
-.seg button b{font-weight:800;color:var(--accent)}
-.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
-.seg button[aria-pressed="true"] b{color:var(--surface)}
-.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
-.day{border:1px dashed var(--line);border-radius:7px;padding:6px 4px;text-align:center;display:flex;flex-direction:column;gap:1px;color:var(--muted);min-width:0}
-.day .dn{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;font-stretch:88%}
-.day .dd{font-size:1.05rem;font-weight:700}
-.day .dt{font-size:.66rem;font-stretch:85%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.day.on{border-style:solid;border-color:var(--accent);background:var(--accent-3);color:var(--ink)}
-.day.extra.on{background:var(--accent);color:var(--surface);border-color:var(--accent)}
-.day.today .dt{font-weight:700}
-.pickernote{font-size:.82rem;color:var(--muted);margin:0}
+/* calendar picker */
+.picker{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.cal{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.cal .wd{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;font-stretch:88%}
+.day{font:inherit;border:1px solid var(--line);background:var(--ground);border-radius:7px;padding:5px 4px;text-align:center;display:flex;flex-direction:column;gap:0;color:var(--ink);min-width:0;cursor:pointer}
+.day .dd{font-size:1.02rem;font-weight:700;line-height:1.2}
+.day .dt{font-size:.64rem;font-stretch:85%;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.day.cp{border-color:var(--accent);border-width:2px}
+.day.today .dt{font-weight:750;color:var(--accent)}
+.day[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.day[aria-pressed="true"] .dt{color:var(--surface)}
+.day:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.day.empty{visibility:hidden}
+.pickernote{font-size:.85rem;color:var(--muted);margin:0}
+.pickernote b{color:var(--ink)}
 
-/* team tiles */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:4px}
-.tile .v{font-size:1.9rem;font-weight:800;font-stretch:105%;line-height:1.1}
-.tile .v small{font-size:.9rem;font-weight:600;color:var(--muted)}
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.tile .v{font-size:1.7rem;font-weight:800;font-stretch:105%;line-height:1.1}
+.tile .v small{font-size:.85rem;font-weight:600;color:var(--muted)}
 .tile .d{font-size:.82rem;color:var(--muted)}
+.tile .d b{color:var(--ink)}
 .tile.hl{border-color:var(--accent)}
 .tile.hl .v{color:var(--accent)}
+.trip{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;column-gap:14px;font-size:.82rem;color:var(--muted)}
+.trip b{font-size:1.25rem;font-weight:800;color:var(--ink);display:block;line-height:1.15}
 
-/* main table */
+/* tables */
 .tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-table{border-collapse:collapse;width:100%;min-width:760px;font-size:.9rem}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+#agentes{min-width:860px}
 th,td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--soft);white-space:nowrap}
 thead th{font-weight:650;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-stretch:88%;background:var(--surface);vertical-align:bottom}
 thead tr.grp th{border-bottom:0;padding-bottom:0;color:var(--ink)}
@@ -76,93 +86,79 @@ th.name,td.name{text-align:left;position:sticky;left:0;background:var(--surface)
 td.name{font-weight:600;font-stretch:95%}
 tbody tr:last-child td{border-bottom:0}
 .sep{border-left:1px solid var(--line)}
-.pace{color:var(--muted)}
-.need{display:inline-flex;flex-direction:column;align-items:center;min-width:52px;border-radius:6px;padding:3px 6px;line-height:1.15}
-.need .n{font-weight:800;font-size:1rem}
-.need .x{font-size:.7rem;font-weight:600}
-.need.ok{background:var(--ok-bg);color:var(--ok)}
-.need.mid{background:var(--mid-bg);color:var(--mid)}
-.need.hard{background:var(--hard-bg);color:var(--hard)}
-.need.done{background:var(--done-bg);color:var(--done)}
-.pct{font-weight:700}
-.proj{font-weight:800;color:var(--accent)}
-.proj small{color:var(--muted);font-weight:600;font-size:.72rem;display:block}
+.muted{color:var(--muted)}
+.acc{font-weight:800}
+.inc{color:var(--accent);font-weight:700}
+.lvl{display:inline-block;border-radius:6px;padding:1px 7px;font-size:.78rem;font-weight:650;background:var(--soft);color:var(--ink)}
+.chip{display:inline-flex;flex-direction:column;align-items:center;min-width:52px;border-radius:6px;padding:2px 6px;line-height:1.15}
+.chip .n{font-weight:800}
+.chip .x{font-size:.68rem;font-weight:600}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.chip.mid{background:var(--mid-bg);color:var(--mid)}
+.chip.hard{background:var(--hard-bg);color:var(--hard)}
+tr.cprow td{background:var(--accent-3)}
+tr.cprow td.name{background:var(--accent-3)}
+tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)}
 .legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.82rem;color:var(--muted);align-items:center}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
-
-/* comparison */
-.cmp{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:9px}
-.row{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) auto;gap:12px;align-items:center}
-.row .nm{font-size:.86rem;font-weight:600;font-stretch:95%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.track{position:relative;height:14px;background:var(--soft);border-radius:4px;overflow:hidden}
-.track i{position:absolute;top:0;bottom:0;display:block}
-.track .b0{background:var(--base)} .track .bA{background:var(--accent)} .track .bB{background:var(--accent-2)} .track .bC{background:var(--accent-3)}
-.track .tick{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--line)}
-.row .vals{font-size:.82rem;white-space:nowrap;color:var(--muted)}
-.row .vals b{color:var(--ink);font-weight:750}
-.row.sel .vals b.cur{color:var(--accent)}
-.axis{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) auto;gap:12px;font-size:.7rem;color:var(--muted)}
-.axis .sc{display:flex;justify-content:space-between}
-.axis .ph{visibility:hidden;font-size:.82rem}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{font:inherit;font-stretch:95%;font-weight:600;font-size:.88rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
 
 .howto{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
-.howto ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.howto ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;max-width:74ch}
 .foot{font-size:.78rem;color:var(--muted);max-width:80ch;margin:0}
 
 @media (max-width:560px){
   .wrap{padding-inline:16px}
-  .row,.axis{grid-template-columns:minmax(0,1fr) auto}
-  .row .nm{grid-column:1 / -1}
-  .row .track{grid-column:1}
-  .axis .nmh{display:none}
-  .picker{position:static}
-  .day .dt{font-size:.6rem}
+  .day .dt{font-size:.58rem}
 }
-@media (prefers-reduced-motion:no-preference){ .track i{transition:width .25s ease,left .25s ease} }
 </style>
-
+</head>
+<body>
 <div class="wrap">
   <header>
-    <span class="eyebrow">M0 / M1 / M2 · septiembre 2026</span>
-    <h1>Plan de conversión diaria · PDV México · cierre de septiembre</h1>
-    <p>Datos hasta el lunes 28/9. Quedan 2 días: martes 29 (hoy) y miércoles 30 (cierre). Lo que conviertan hoy baja lo que falta. Meta: cada agente al 100%.</p>
+    <span class="eyebrow">M0 / M1 / M2 · octubre 2026</span>
+    <h1>Plan de conversión diaria · PDV México · octubre</h1>
+    <p>Desde octubre cada agente tiene su propia meta según horas trabajadas y momento en la cuenta. Al checkpoint del <b>jueves 15/10</b> hay que llevar el <b>40% de M0</b> y el <b>70% de M1 y M2</b>; el resto se completa del 16 al 30. Todos los números son <b>acumulados</b> al cierre de cada día y se reparten en los 22 días hábiles (lunes a viernes).</p>
+    <span class="status" id="status"></span>
   </header>
 
-  <div class="picker" role="group" aria-label="Días que quedan">
-    <span class="eyebrow">Quedan 2 días de trabajo</span>
+  <div class="picker" role="group" aria-label="Elegí un día de octubre">
+    <span class="eyebrow">Elegí un día · octubre 2026</span>
     <div class="cal" id="cal"></div>
     <p class="pickernote" id="pnote"></p>
   </div>
 
   <section>
-    <h2>Equipo</h2>
+    <h2>Metas por nivel</h2>
+    <p class="sub" id="nivelessub"></p>
     <div class="tiles" id="tiles"></div>
-    <p class="sub" id="teamnote"></p>
   </section>
 
   <section>
-    <h2>Cuánto necesita cada agente por día para llegar al 100%</h2>
-    <p class="sub">Ordenado de más atrasado a más adelantado según el % Total de hoy. Cada casilla muestra cuántas conversiones por día necesita para llegar a su objetivo y cuántas veces su ritmo actual es eso.</p>
-    <div class="legend">
-      <span><i class="sw" style="background:var(--ok-bg);outline:1px solid var(--ok)"></i>Alcanzable a su ritmo (hasta 1,0×)</span>
-      <span><i class="sw" style="background:var(--mid-bg);outline:1px solid var(--mid)"></i>Exigente (1,0× a 1,5×)</span>
-      <span><i class="sw" style="background:var(--hard-bg);outline:1px solid var(--hard)"></i>Muy difícil (más de 1,5×)</span>
-      <span><i class="sw" style="background:var(--done-bg);outline:1px solid var(--done)"></i>✓ Cumplido</span>
+    <h2>Cuánto debería llevar cada agente</h2>
+    <p class="sub" id="agsub"></p>
+    <div class="legend" id="aglegend" hidden>
+      <span><i class="sw" style="background:var(--ok-bg);outline:1px solid var(--ok)"></i>Al día (100% o más del esperado)</span>
+      <span><i class="sw" style="background:var(--mid-bg);outline:1px solid var(--mid)"></i>Cerca (90% a 99%)</span>
+      <span><i class="sw" style="background:var(--hard-bg);outline:1px solid var(--hard)"></i>Atrasado (menos de 90%)</span>
     </div>
     <div class="tbl">
-      <table>
+      <table id="agentes">
         <thead>
           <tr class="grp">
             <th class="name" rowspan="2">Agente</th>
-            <th rowspan="2">% Total<span class="o">hoy</span></th>
-            <th colspan="3" class="sep">Ritmo actual por día</th>
-            <th colspan="3" class="sep">Necesita por día <span id="thsc"></span></th>
-            <th rowspan="2" class="sep">Proyección<span class="o">a su ritmo</span></th>
+            <th rowspan="2">Meta del mes<span class="o">M0 / M1 / M2</span></th>
+            <th colspan="3" class="sep">Acumulado esperado <span id="thdia"></span></th>
+            <th colspan="3" class="sep">Ese día suma</th>
+            <th colspan="2" class="sep">Avance real</th>
           </tr>
           <tr>
             <th class="sep">M0</th><th>M1</th><th>M2</th>
-            <th class="sep">M0<span class="o">obj 50</span></th><th>M1<span class="o">obj 30</span></th><th>M2<span class="o">obj 21</span></th>
+            <th class="sep">M0</th><th>M1</th><th>M2</th>
+            <th class="sep">Lleva<span class="o">M0 / M1 / M2</span></th><th>% del esperado</th>
           </tr>
         </thead>
         <tbody id="tb"></tbody>
@@ -171,85 +167,177 @@ tbody tr:last-child td{border-bottom:0}
   </section>
 
   <section>
-    <h2>Cómo cierra cada agente si sigue a su ritmo</h2>
-    <p class="sub">% Total proyectado al 30/9 si cada agente mantiene el ritmo que trae. Tramo oscuro: % de hoy. Tramo azul: lo que suma martes y miércoles. El espacio que queda hasta el final de la barra es lo que falta para el 100%.</p>
-    <div class="legend">
-      <span><i class="sw" style="background:var(--base)"></i>Hoy</span>
-      <span><i class="sw" style="background:var(--accent)"></i>+ mar–mié (2 días)</span>
+    <h2>Calendario completo por nivel</h2>
+    <p class="sub">Acumulado que debería tener cada agente al cierre de cada día hábil, y cuánto suma ese día. La fila azul es el checkpoint del jueves 15.</p>
+    <div class="seg" id="seg" role="group" aria-label="Nivel de meta"></div>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr class="grp">
+            <th class="name" rowspan="2">Día</th>
+            <th colspan="3" class="sep">Acumulado al cierre</th>
+            <th colspan="3" class="sep">Suma ese día</th>
+          </tr>
+          <tr>
+            <th class="sep">M0</th><th>M1</th><th>M2</th>
+            <th class="sep">M0</th><th>M1</th><th>M2</th>
+          </tr>
+        </thead>
+        <tbody id="tbcal"></tbody>
+      </table>
     </div>
-    <div class="cmp" id="cmp"></div>
   </section>
 
   <section class="howto">
     <h2>Cómo leerlo</h2>
     <ul>
-      <li>El % Total pondera M0 al 30%, M1 al 40% y M2 al 30%. Cada métrica topa en 100%: pasarse en una no compensa las otras.</li>
-      <li>Ritmo actual = conversiones acumuladas ÷ días trabajados (20 días hábiles del 1 al 28/9; Yanda empezó el 14/9, 11 días).</li>
-      <li>Necesita por día = lo que falta para el objetivo ÷ días que quedan, redondeado hacia arriba.</li>
-      <li>El multiplicador compara eso con su ritmo: 2,0× significa convertir el doble de lo que viene haciendo por día.</li>
+      <li><b>Acumulado esperado</b> = lo que el agente debería llevar sumado desde el 1/10 hasta el cierre del día elegido, según su meta.</li>
+      <li><b>Hasta el jueves 15</b> (11 días hábiles) se reparte el 40% de la meta de M0 y el 70% de M1 y M2, parejo por día. <b>Del 16 al 30</b> (11 días hábiles) se reparte el resto.</li>
+      <li><b>Ese día suma</b> = lo que hay que convertir ese día para seguir en ritmo. Es un promedio: algunos días se redondea para arriba y otros para abajo, pero el acumulado siempre cierra en la meta.</li>
+      <li><b>% del esperado</b> pondera M0 al 30%, M1 al 40% y M2 al 30%, comparando lo que lleva cada agente con lo que debería llevar a la fecha de los datos.</li>
+      <li>Son los mismos números que mandan los bots de Slack (Ritmo PDV y Productividad).</li>
     </ul>
   </section>
 
-  <p class="foot">Proyección del equipo: por métrica se suma lo proyectado de cada agente, topado en su objetivo individual, y se divide por el objetivo del equipo (950 / 570 / 399); luego se pondera 30/40/30. "Necesita por día (equipo)" = (objetivo del equipo − acumulado) ÷ días, redondeado hacia arriba; la suma de las necesidades individuales es algo mayor porque quien ya cumplió una métrica no compensa a los demás.</p>
+  <p class="foot" id="foot"></p>
 </div>
 
 <script>
-const DATA = {"agents": [{"name": "Yanda Mosquera", "cur": [16, 14, 13], "days": 11, "pace": [1.5, 1.3, 1.2], "pct": 47, "sc": {"A": {"m": [{"falta": 34, "need": 17, "eff": 11.7, "cls": "hard"}, {"falta": 16, "need": 8, "eff": 6.3, "cls": "hard"}, {"falta": 8, "need": 4, "eff": 3.4, "cls": "hard"}], "proj": [18.9, 16.5, 15.4], "projPct": 55, "projMet": [38, 55, 73]}}, "maxEff": {"A": 11.7}}, {"name": "Florencia Rey", "cur": [35, 14, 8], "days": 20, "pace": [1.8, 0.7, 0.4], "pct": 51, "sc": {"A": {"m": [{"falta": 15, "need": 8, "eff": 4.6, "cls": "hard"}, {"falta": 16, "need": 8, "eff": 11.4, "cls": "hard"}, {"falta": 13, "need": 7, "eff": 17.5, "cls": "hard"}], "proj": [38.5, 15.4, 8.8], "projPct": 56, "projMet": [77, 51, 42]}}, "maxEff": {"A": 17.5}}, {"name": "Jennifer Ledesma", "cur": [30, 22, 8], "days": 20, "pace": [1.5, 1.1, 0.4], "pct": 59, "sc": {"A": {"m": [{"falta": 20, "need": 10, "eff": 6.7, "cls": "hard"}, {"falta": 8, "need": 4, "eff": 3.6, "cls": "hard"}, {"falta": 13, "need": 7, "eff": 17.5, "cls": "hard"}], "proj": [33.0, 24.2, 8.8], "projPct": 65, "projMet": [66, 81, 42]}}, "maxEff": {"A": 17.5}}, {"name": "Tomas Sanchez Castro", "cur": [41, 14, 12], "days": 20, "pace": [2.0, 0.7, 0.6], "pct": 60, "sc": {"A": {"m": [{"falta": 9, "need": 5, "eff": 2.4, "cls": "hard"}, {"falta": 16, "need": 8, "eff": 11.4, "cls": "hard"}, {"falta": 9, "need": 5, "eff": 8.3, "cls": "hard"}], "proj": [45.1, 15.4, 13.2], "projPct": 66, "projMet": [90, 51, 63]}}, "maxEff": {"A": 11.4}}, {"name": "Ariana Anfuso", "cur": [37, 16, 12], "days": 20, "pace": [1.9, 0.8, 0.6], "pct": 61, "sc": {"A": {"m": [{"falta": 13, "need": 7, "eff": 3.8, "cls": "hard"}, {"falta": 14, "need": 7, "eff": 8.8, "cls": "hard"}, {"falta": 9, "need": 5, "eff": 8.3, "cls": "hard"}], "proj": [40.7, 17.6, 13.2], "projPct": 67, "projMet": [81, 59, 63]}}, "maxEff": {"A": 8.8}}, {"name": "Candela Ehrt", "cur": [51, 13, 11], "days": 20, "pace": [2.5, 0.7, 0.6], "pct": 63, "sc": {"A": {"m": [{"falta": 0, "need": 0, "eff": null, "cls": null}, {"falta": 17, "need": 9, "eff": 13.8, "cls": "hard"}, {"falta": 10, "need": 5, "eff": 9.1, "cls": "hard"}], "proj": [56.1, 14.3, 12.1], "projPct": 66, "projMet": [100, 48, 58]}}, "maxEff": {"A": 13.8}}, {"name": "Candela Rodriguez", "cur": [30, 19, 15], "days": 20, "pace": [1.5, 0.9, 0.8], "pct": 65, "sc": {"A": {"m": [{"falta": 20, "need": 10, "eff": 6.7, "cls": "hard"}, {"falta": 11, "need": 6, "eff": 6.3, "cls": "hard"}, {"falta": 6, "need": 3, "eff": 4.0, "cls": "hard"}], "proj": [33.0, 20.9, 16.5], "projPct": 71, "projMet": [66, 70, 79]}}, "maxEff": {"A": 6.7}}, {"name": "Gonzalo Garbarino Ibañez", "cur": [30, 24, 15], "days": 20, "pace": [1.5, 1.2, 0.8], "pct": 71, "sc": {"A": {"m": [{"falta": 20, "need": 10, "eff": 6.7, "cls": "hard"}, {"falta": 6, "need": 3, "eff": 2.5, "cls": "hard"}, {"falta": 6, "need": 3, "eff": 4.0, "cls": "hard"}], "proj": [33.0, 26.4, 16.5], "projPct": 79, "projMet": [66, 88, 79]}}, "maxEff": {"A": 6.7}}, {"name": "Ismael Nazareno Barreto", "cur": [39, 22, 14], "days": 20, "pace": [1.9, 1.1, 0.7], "pct": 73, "sc": {"A": {"m": [{"falta": 11, "need": 6, "eff": 3.1, "cls": "hard"}, {"falta": 8, "need": 4, "eff": 3.6, "cls": "hard"}, {"falta": 7, "need": 4, "eff": 5.7, "cls": "hard"}], "proj": [42.9, 24.2, 15.4], "projPct": 80, "projMet": [86, 81, 73]}}, "maxEff": {"A": 5.7}}, {"name": "Bella Falcones", "cur": [44, 20, 14], "days": 20, "pace": [2.2, 1.0, 0.7], "pct": 73, "sc": {"A": {"m": [{"falta": 6, "need": 3, "eff": 1.4, "cls": "mid"}, {"falta": 10, "need": 5, "eff": 5.0, "cls": "hard"}, {"falta": 7, "need": 4, "eff": 5.7, "cls": "hard"}], "proj": [48.4, 22.0, 15.4], "projPct": 80, "projMet": [97, 73, 73]}}, "maxEff": {"A": 5.7}}, {"name": "Carolina Venguiarrutti", "cur": [34, 18, 21], "days": 20, "pace": [1.7, 0.9, 1.1], "pct": 74, "sc": {"A": {"m": [{"falta": 16, "need": 8, "eff": 4.7, "cls": "hard"}, {"falta": 12, "need": 6, "eff": 6.7, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [37.4, 19.8, 23.1], "projPct": 79, "projMet": [75, 66, 100]}}, "maxEff": {"A": 6.7}}, {"name": "Aylen Jaubrena", "cur": [41, 22, 16], "days": 20, "pace": [2.0, 1.1, 0.8], "pct": 77, "sc": {"A": {"m": [{"falta": 9, "need": 5, "eff": 2.4, "cls": "hard"}, {"falta": 8, "need": 4, "eff": 3.6, "cls": "hard"}, {"falta": 5, "need": 3, "eff": 3.8, "cls": "hard"}], "proj": [45.1, 24.2, 17.6], "projPct": 84, "projMet": [90, 81, 84]}}, "maxEff": {"A": 3.8}}, {"name": "Santino Garcia", "cur": [33, 21, 24], "days": 20, "pace": [1.6, 1.1, 1.2], "pct": 78, "sc": {"A": {"m": [{"falta": 17, "need": 9, "eff": 5.5, "cls": "hard"}, {"falta": 9, "need": 5, "eff": 4.8, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [36.3, 23.1, 26.4], "projPct": 83, "projMet": [73, 77, 100]}}, "maxEff": {"A": 5.5}}, {"name": "Irina Sstanley", "cur": [51, 19, 16], "days": 20, "pace": [2.5, 0.9, 0.8], "pct": 78, "sc": {"A": {"m": [{"falta": 0, "need": 0, "eff": null, "cls": null}, {"falta": 11, "need": 6, "eff": 6.3, "cls": "hard"}, {"falta": 5, "need": 3, "eff": 3.8, "cls": "hard"}], "proj": [56.1, 20.9, 17.6], "projPct": 83, "projMet": [100, 70, 84]}}, "maxEff": {"A": 6.3}}, {"name": "Martiniano Suarez", "cur": [45, 25, 13], "days": 20, "pace": [2.2, 1.2, 0.7], "pct": 79, "sc": {"A": {"m": [{"falta": 5, "need": 3, "eff": 1.3, "cls": "mid"}, {"falta": 5, "need": 3, "eff": 2.4, "cls": "hard"}, {"falta": 8, "need": 4, "eff": 6.2, "cls": "hard"}], "proj": [49.5, 27.5, 14.3], "projPct": 87, "projMet": [99, 92, 68]}}, "maxEff": {"A": 6.2}}, {"name": "Ismael Chantir", "cur": [40, 22, 18], "days": 20, "pace": [2.0, 1.1, 0.9], "pct": 79, "sc": {"A": {"m": [{"falta": 10, "need": 5, "eff": 2.5, "cls": "hard"}, {"falta": 8, "need": 4, "eff": 3.6, "cls": "hard"}, {"falta": 3, "need": 2, "eff": 2.2, "cls": "hard"}], "proj": [44.0, 24.2, 19.8], "projPct": 87, "projMet": [88, 81, 94]}}, "maxEff": {"A": 3.6}}, {"name": "Kiara Robledo Ibarra", "cur": [47, 18, 21], "days": 20, "pace": [2.4, 0.9, 1.1], "pct": 82, "sc": {"A": {"m": [{"falta": 3, "need": 2, "eff": 0.9, "cls": "ok"}, {"falta": 12, "need": 6, "eff": 6.7, "cls": "hard"}, {"falta": 0, "need": 0, "eff": null, "cls": null}], "proj": [51.7, 19.8, 23.1], "projPct": 86, "projMet": [100, 66, 100]}}, "maxEff": {"A": 6.7}}, {"name": "Bautista Lucchetti", "cur": [40, 28, 17], "days": 20, "pace": [2.0, 1.4, 0.8], "pct": 86, "sc": {"A": {"m": [{"falta": 10, "need": 5, "eff": 2.5, "cls": "hard"}, {"falta": 2, "need": 1, "eff": 0.7, "cls": "ok"}, {"falta": 4, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [44.0, 30.8, 18.7], "projPct": 93, "projMet": [88, 100, 89]}}, "maxEff": {"A": 2.5}}, {"name": "Denisse Sanabria", "cur": [44, 32, 17], "days": 20, "pace": [2.2, 1.6, 0.8], "pct": 91, "sc": {"A": {"m": [{"falta": 6, "need": 3, "eff": 1.4, "cls": "mid"}, {"falta": 0, "need": 0, "eff": null, "cls": null}, {"falta": 4, "need": 2, "eff": 2.4, "cls": "hard"}], "proj": [48.4, 35.2, 18.7], "projPct": 96, "projMet": [97, 100, 89]}}, "maxEff": {"A": 2.4}}], "team": {"cur": [728, 383, 285], "obj": [950, 570, 399], "pct": 71, "curMet": [77, 67, 71], "sc": {"A": {"days": 2, "sumNeed": [116, 97, 63], "teamNeed": [111, 94, 57], "teamPace": [37.1, 19.7, 14.8], "projMet": [83, 73, 76], "projPct": 77, "nOk": 0, "reach100": 0, "projCnt": [788, 416, 305], "cells": {"ok": 2, "mid": 3, "hard": 46, "None": 6}}}}};
-const SCN = {
-  A:{days:["29","30"],label:"mar 29 y mié 30",note:"Martes 29 (hoy) y miércoles 30 (cierre)."}
-};
-const CAL = [["jue","24","cargado"],["vie","25","cargado"],["sáb","26","cargado"],["dom","27","libre"],["lun","28","cargado"],["mar","29","hoy"],["mié","30","cierre"]];
-const fmt = n => String(n).replace(".", ",");
-const pct = n => n + "%";
-let cur = "A";
-try { const s = localStorage.getItem("pdv-sc"); if (s && SCN[s]) cur = s; } catch(e) {}
+/* ── Datos ──────────────────────────────────────────────────────────────
+   AGENTS: agentes activos de octubre con su meta (pestaña "Summary Oct").
+   AVANCE: lo que lleva cada agente, [M0, M1, M2], al cierre de AVANCE_AL.
+   Mientras la planilla no tenga datos de octubre queda en null. */
+const AGENTS = [
+  ["Ismael Nazareno Barreto",[67,40,28]],["Kiara Florencia Robledo Ibarra",[67,40,28]],
+  ["Carolina Venguiarrutti",[67,40,28]],["Bella Falcones",[67,40,28]],
+  ["Ismael Chantir",[67,40,28]],["Gonzalo Gaston Garbarino Ibañez",[67,40,28]],
+  ["Jennifer Ledesma",[50,30,21]],["Denisse Sanabria",[50,30,21]],
+  ["Candela Rodriguez",[67,40,28]],["Irina Stanley",[67,40,28]],
+  ["Martiniano Suarez",[50,30,21]],["Aylen Jaubrena",[67,40,28]],
+  ["Tomas Sanchez Castro",[50,30,21]],["Bautista Lucchetti",[67,40,28]],
+  ["Ariana Anfuso",[50,30,21]],["Florencia Rey",[50,30,21]],
+  ["Santino Garcia",[48,29,20]],["Yanda Mosquera",[48,29,20]],
+  ["Angy Poveda",[40,24,17]],["Julieta Pastorini",[40,24,17]]
+];
+const AVANCE = null;      // ej. {"Bella Falcones":[5,6,4], ...}
+const AVANCE_AL = null;   // ej. "2026-10-05" (último día con datos completos)
 
-function renderCal(){
-  const on = SCN[cur].days;
-  document.getElementById("cal").innerHTML = CAL.map(([dn,dd,dt])=>{
-    const isOn = on.includes(dd), extra = false;
-    return `<div class="day${isOn?" on":""}${extra?" extra":""}${dd==="29"?" today":""}"><span class="dn">${dn}</span><span class="dd">${dd}</span><span class="dt">${isOn?(dt||"trabaja"):(dt||"&nbsp;")}</span></div>`;
-  }).join("");
-  document.getElementById("pnote").textContent = SCN[cur].note;
+/* ── Lógica de metas (igual que metas.py de los bots) ─────────────────── */
+const YEAR = 2026, MONTH = 9; // octubre (0-based)
+const PCT_CP = [0.40, 0.70, 0.70], PESOS = [0.3, 0.4, 0.3], DIA_CP = 15;
+const HABILES = [];
+for (let d = 1; d <= 31; d++) { const dt = new Date(YEAR, MONTH, d); if (dt.getDay() >= 1 && dt.getDay() <= 5) HABILES.push(d); }
+const D1 = HABILES.filter(d => d <= DIA_CP).length, D2 = HABILES.length - D1;
+const DN = ["dom","lun","mar","mié","jue","vie","sáb"];
+const dayName = d => DN[new Date(YEAR, MONTH, d).getDay()];
+const fecha = d => `${dayName(d)} ${d}/10`;
+const r = x => Math.floor(x + 0.5);
+function esperado(meta, i, k) {
+  if (k <= 0) return 0;
+  if (k <= D1) return meta * PCT_CP[i] * k / D1;
+  return meta * PCT_CP[i] + meta * (1 - PCT_CP[i]) * Math.min(k - D1, D2) / D2;
 }
-function renderTeam(){
-  const t = DATA.team, s = t.sc[cur];
-  const m = ["M0","M1","M2"];
-  let h = m.map((k,i)=>`<div class="tile"><span class="eyebrow">${k} · necesita por día</span><span class="v">${s.teamNeed[i]} <small>/ día</small></span><span class="d">Ritmo actual del equipo ${fmt(s.teamPace[i])}/día · van ${t.cur[i]} de ${t.obj[i]}</span></div>`).join("");
-  h += `<div class="tile hl"><span class="eyebrow">% Total proyectado a su ritmo</span><span class="v">${pct(s.projPct)} <small>hoy ${pct(t.pct)}</small></span><span class="d">Al 30/9 si el equipo sigue a su ritmo · faltarían ${100-s.projPct} pts para el 100%</span></div>`;
+const idx = d => HABILES.indexOf(d) + 1;            // k del día (cierre)
+const acum = (m, d) => m.map((v, i) => r(esperado(v, i, idx(d))));
+const suma = (m, d) => { const a = acum(m, d), p = idx(d) > 1 ? acum(m, HABILES[idx(d) - 2]) : [0,0,0]; return a.map((v, i) => v - p[i]); };
+function pctVs(meta, lleva, k) {
+  let lo = 0, es = 0;
+  meta.forEach((m, i) => { lo += PESOS[i] * lleva[i] / m; es += PESOS[i] * esperado(m, i, k) / m; });
+  return es ? lo / es * 100 : null;
+}
+const clsPct = p => p === null ? "" : (Math.round(p) >= 100 ? "ok" : Math.round(p) >= 90 ? "mid" : "hard");
+
+/* ── Estado ───────────────────────────────────────────────────────────── */
+function hoyOct() {
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" }));
+  if (now.getFullYear() !== YEAR || now.getMonth() !== MONTH) return now < new Date(YEAR, MONTH, 1) ? HABILES[0] : HABILES[HABILES.length - 1];
+  const d = now.getDate();
+  return HABILES.find(h => h >= d) || HABILES[HABILES.length - 1];
+}
+const HOY = hoyOct();
+let sel = HOY, nivel = "67/40/28";
+try { const s = localStorage.getItem("pdv-oct-nivel"); if (s) nivel = s; } catch (e) {}
+const NIVELES = [...new Set(AGENTS.map(a => a[1].join("/")))].sort((a, b) => +b.split("/")[0] - +a.split("/")[0]);
+if (!NIVELES.includes(nivel)) nivel = NIVELES[0];
+
+/* ── Render ───────────────────────────────────────────────────────────── */
+function renderStatus() {
+  const el = document.getElementById("status");
+  if (AVANCE && AVANCE_AL) {
+    const d = +AVANCE_AL.slice(8, 10);
+    el.className = "status live"; el.textContent = `Avance real cargado hasta el ${fecha(d)}`;
+  } else {
+    el.className = "status"; el.textContent = "Avance real: pendiente — la planilla todavía no tiene datos de octubre";
+  }
+}
+function renderCal() {
+  const first = new Date(YEAR, MONTH, HABILES[0]).getDay(); // 1=lun
+  let h = ["lun","mar","mié","jue","vie"].map(w => `<span class="wd">${w}</span>`).join("");
+  for (let i = 1; i < first; i++) h += `<span class="day empty" aria-hidden="true"></span>`;
+  h += HABILES.map(d => {
+    const tags = [d === HOY ? "hoy" : "", d === DIA_CP ? "checkpoint" : "", d === HABILES[HABILES.length - 1] ? "cierre" : ""].filter(Boolean).join(" · ");
+    return `<button class="day${d === DIA_CP ? " cp" : ""}${d === HOY ? " today" : ""}" data-d="${d}" aria-pressed="${d === sel}" aria-label="${fecha(d)}"><span class="dd">${d}</span><span class="dt">${tags || "&nbsp;"}</span></button>`;
+  }).join("");
+  const cal = document.getElementById("cal");
+  cal.innerHTML = h;
+  cal.querySelectorAll("button.day").forEach(b => b.onclick = () => { sel = +b.dataset.d; render(); });
+  const k = idx(sel);
+  const faltanCp = HABILES.filter(d => d > sel && d <= DIA_CP).length;
+  const antes = sel === DIA_CP ? "es el día del checkpoint" : sel < DIA_CP ? `faltan ${faltanCp} día${faltanCp !== 1 ? "s" : ""} hábil${faltanCp !== 1 ? "es" : ""} para el checkpoint` : "checkpoint ya pasado";
+  document.getElementById("pnote").innerHTML = `Al cierre del <b>${fecha(sel)}</b>: día hábil ${k} de ${HABILES.length} · ${antes}.`;
+}
+function renderTiles() {
+  document.getElementById("nivelessub").textContent = `Acumulado que debería llevar cada agente al cierre del ${fecha(sel)}, por nivel de meta. Debajo, el checkpoint del jueves 15 y la meta del mes.`;
+  const eqMeta = [0,0,0], eqEsp = [0,0,0];
+  AGENTS.forEach(([, m]) => { const a = acum(m, sel); m.forEach((v, i) => { eqMeta[i] += v; eqEsp[i] += a[i]; }); });
+  let h = NIVELES.map(n => {
+    const m = n.split("/").map(Number), a = acum(m, sel), s = suma(m, sel), cp = acum(m, DIA_CP);
+    const cnt = AGENTS.filter(x => x[1].join("/") === n).length;
+    return `<div class="tile"><span class="eyebrow">Meta ${n} · ${cnt} agente${cnt !== 1 ? "s" : ""}</span>
+      <div class="trip"><span>M0<b>${a[0]}</b></span><span>M1<b>${a[1]}</b></span><span>M2<b>${a[2]}</b></span></div>
+      <span class="d">Ese día suma <b>${s.join(" / ")}</b> · checkpoint 15/10: <b>${cp.join(" / ")}</b></span></div>`;
+  }).join("");
+  h += `<div class="tile hl"><span class="eyebrow">Equipo · ${AGENTS.length} agentes</span>
+    <div class="trip"><span>M0<b>${eqEsp[0]}</b></span><span>M1<b>${eqEsp[1]}</b></span><span>M2<b>${eqEsp[2]}</b></span></div>
+    <span class="d">Esperado al ${fecha(sel)} · meta del mes <b>${eqMeta.join(" / ")}</b></span></div>`;
   document.getElementById("tiles").innerHTML = h;
-  document.getElementById("teamnote").textContent = `Con ${s.days} días, para llegar al 100% el equipo tendría que convertir ${s.teamNeed[0]} M0, ${s.teamNeed[1]} M1 y ${s.teamNeed[2]} M2 por día (sumando lo que necesita cada agente: ${s.sumNeed[0]} / ${s.sumNeed[1]} / ${s.sumNeed[2]}). A su ritmo actual cerraría en ${s.projCnt[0]} / ${s.projCnt[1]} / ${s.projCnt[2]} (contando hasta el objetivo de cada agente).`;
 }
-function needCell(m){
-  if (m.cls === null) return `<span class="need done" title="Objetivo cumplido"><span class="n">✓</span><span class="x">cumplido</span></span>`;
-  return `<span class="need ${m.cls}" title="Faltan ${m.falta}"><span class="n">${m.need}</span><span class="x">${fmt(m.eff)}×</span></span>`;
-}
-function renderTable(){
-  document.getElementById("thsc").textContent = "· " + SCN[cur].label;
-  document.getElementById("tb").innerHTML = DATA.agents.map(a=>{
-    const s = a.sc[cur];
-    return `<tr><td class="name">${a.name}</td><td class="pct">${pct(a.pct)}</td>
-      <td class="pace sep">${fmt(a.pace[0])}</td><td class="pace">${fmt(a.pace[1])}</td><td class="pace">${fmt(a.pace[2])}</td>
-      <td class="sep">${needCell(s.m[0])}</td><td>${needCell(s.m[1])}</td><td>${needCell(s.m[2])}</td>
-      <td class="proj sep">${pct(s.projPct)}<small>+${s.projPct-a.pct} pts</small></td></tr>`;
+function renderAgentes() {
+  document.getElementById("thdia").textContent = `· ${fecha(sel)}`;
+  const kAv = AVANCE_AL ? idx(+AVANCE_AL.slice(8, 10)) : 0;
+  document.getElementById("agsub").textContent = AVANCE
+    ? `Acumulado esperado al cierre del ${fecha(sel)} y lo que suma ese día. El avance real compara lo que lleva cada agente con lo que debería llevar al ${fecha(+AVANCE_AL.slice(8, 10))}.`
+    : `Acumulado esperado al cierre del ${fecha(sel)} y lo que suma ese día. El avance real aparece cuando la planilla tenga datos de octubre.`;
+  document.getElementById("aglegend").hidden = !AVANCE;
+  document.getElementById("tb").innerHTML = AGENTS.map(([name, m]) => {
+    const a = acum(m, sel), s = suma(m, sel);
+    let lleva = `<td class="sep muted">—</td><td class="muted">—</td>`;
+    if (AVANCE && AVANCE[name]) {
+      const p = pctVs(m, AVANCE[name], kAv);
+      lleva = `<td class="sep">${AVANCE[name].join(" / ")}</td><td>${p === null ? "—" : `<span class="chip ${clsPct(p)}"><span class="n">${Math.round(p)}%</span></span>`}</td>`;
+    }
+    return `<tr><td class="name">${name}</td><td><span class="lvl">${m.join(" / ")}</span></td>
+      <td class="acc sep">${a[0]}</td><td class="acc">${a[1]}</td><td class="acc">${a[2]}</td>
+      <td class="inc sep">+${s[0]}</td><td class="inc">+${s[1]}</td><td class="inc">+${s[2]}</td>${lleva}</tr>`;
   }).join("");
 }
-function renderCmp(){
-  const ticks = [25,50,75].map(v=>`<span class="tick" style="left:${v}%"></span>`).join("");
-  let h = `<div class="axis"><span class="nmh"></span><span class="sc"><span>0%</span><span>50%</span><span>100%</span></span><span class="ph">00% → 00%</span></div>`;
-  h += DATA.agents.map(a=>{
-    const p0=a.pct, pA=a.sc.A.projPct;
-    const seg=(cls,l,r)=>`<i class="${cls}" style="left:${l}%;width:${Math.max(0,r-l)}%"></i>`;
-    const b = k => `<b${k===cur?' class="cur"':''}>${a.sc[k].projPct}%</b>`;
-    return `<div class="row"><span class="nm">${a.name}</span><span class="track">${seg("b0",0,p0)}${seg("bA",p0,pA)}${ticks}</span><span class="vals">${p0}% → ${b("A")}</span></div>`;
+function renderNivel() {
+  const seg = document.getElementById("seg");
+  seg.innerHTML = NIVELES.map(n => `<button data-n="${n}" aria-pressed="${n === nivel}">Meta ${n}</button>`).join("");
+  seg.querySelectorAll("button").forEach(b => b.onclick = () => { nivel = b.dataset.n; try { localStorage.setItem("pdv-oct-nivel", nivel); } catch (e) {} renderNivel(); });
+  const m = nivel.split("/").map(Number);
+  document.getElementById("tbcal").innerHTML = HABILES.map(d => {
+    const a = acum(m, d), s = suma(m, d);
+    const cls = [d === DIA_CP ? "cprow" : "", d === sel ? "selrow" : ""].filter(Boolean).join(" ");
+    const tag = d === DIA_CP ? " · checkpoint" : d === HABILES[HABILES.length - 1] ? " · cierre" : "";
+    return `<tr class="${cls}"><td class="name">${fecha(d)}${tag}</td>
+      <td class="acc sep">${a[0]}</td><td class="acc">${a[1]}</td><td class="acc">${a[2]}</td>
+      <td class="inc sep">+${s[0]}</td><td class="inc">+${s[1]}</td><td class="inc">+${s[2]}</td></tr>`;
   }).join("");
-  document.getElementById("cmp").innerHTML = h;
 }
-function render(){
-  document.querySelectorAll("#seg button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.k===cur?"true":"false"));
-  renderCal(); renderTeam(); renderTable(); renderCmp();
-}
+function render() { renderStatus(); renderCal(); renderTiles(); renderAgentes(); renderNivel(); }
+document.getElementById("foot").textContent = `Agentes y metas tomados de la pestaña "Summary Oct" (20 agentes activos en octubre). Días hábiles: ${HABILES.length} (${D1} hasta el jueves 15 y ${D2} después), lunes a viernes, feriados incluidos. Valores redondeados al entero más cercano.`;
 render();
 </script>
-
-</body></html>
+</body>
+</html>
