@@ -1,0 +1,38 @@
+name: Actualizar avance de la página
+on:
+  # Lo dispara cron-job.org con un repository_dispatch de tipo
+  # "actualizar-avance" (lunes a viernes). No hay "schedule:" nativo a
+  # propósito: el horario lo controla cron-job.org, igual que los bots.
+  repository_dispatch:
+    types:
+      - actualizar-avance
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: actualizar-avance
+  cancel-in-progress: false
+jobs:
+  actualizar:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: pip install google-auth==2.35.0 requests==2.32.3
+      - name: Leer la planilla y actualizar index.html
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: python actualizar_avance.py
+      - name: Publicar si cambió
+        run: |
+          if git diff --quiet index.html; then
+            echo "La página no cambió, no hay nada que publicar."
+            exit 0
+          fi
+          git config user.name "actualizar-avance"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git commit -m "Avance real actualizado $(TZ=America/Argentina/Buenos_Aires date '+%d/%m %H:%M')"
+          git push
