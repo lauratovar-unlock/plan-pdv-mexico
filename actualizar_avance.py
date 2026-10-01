@@ -153,15 +153,18 @@ def actualizar_html(html, agentes, avance_al):
 
 def main():
     hoy = datetime.now(TZ).date()
-    avance_al = ultimo_habil_completo(hoy)
-    if avance_al is None:
-        print("Todavía no pasó ningún día hábil del mes: no hay avance para mostrar.")
-        return
+    # Se lee la planilla siempre, aunque no haya avance para mostrar, así cada
+    # corrida confirma que la llave de Google funciona.
     try:
         nombre, rows = leer_pestana(sesion_google(), hoy)
+        print(f"Planilla leída: pestaña '{nombre}'.")
         agentes = parse_agentes(rows)
     except ValueError as e:
         print(f"No actualizo la página: {e}")
+        return
+    avance_al = ultimo_habil_completo(hoy)
+    if avance_al is None:
+        print("Todavía no pasó ningún día hábil del mes: no hay avance para mostrar.")
         return
     with open(INDEX, encoding="utf-8") as f:
         html = f.read()
