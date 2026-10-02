@@ -169,23 +169,22 @@ tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)
   </section>
 
   <section>
-    <h2>Calendario completo por nivel</h2>
-    <p class="sub">Acumulado que debería tener cada agente al cierre de cada día hábil, y cuánto suma ese día. La fila azul es el checkpoint del jueves 15.</p>
-    <div class="seg" id="seg" role="group" aria-label="Nivel de meta"></div>
+    <h2>Total equipo</h2>
+    <p class="sub" id="eqsub"></p>
     <div class="tbl">
-      <table>
+      <table id="equipo">
         <thead>
-          <tr class="grp">
-            <th class="name" rowspan="2">Día</th>
-            <th colspan="3" class="sep">Acumulado al cierre</th>
-            <th colspan="3" class="sep">Suma ese día</th>
-          </tr>
           <tr>
-            <th class="sep">M0</th><th>M1</th><th>M2</th>
-            <th class="sep">M0</th><th>M1</th><th>M2</th>
+            <th class="name">Cohort</th>
+            <th>Objetivo total equipo</th>
+            <th class="sep">Lleva a hoy</th>
+            <th class="sep">Faltantes para el objetivo</th>
+            <th class="sep">% del objetivo actual</th>
+            <th class="sep">Proyección a fin de mes</th>
+            <th class="sep">Hoy debe convertir</th>
           </tr>
         </thead>
-        <tbody id="tbcal"></tbody>
+        <tbody id="tbeq"></tbody>
       </table>
     </div>
   </section>
@@ -195,9 +194,10 @@ tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)
     <ul>
       <li><b>Acumulado esperado</b> = lo que el agente debería llevar sumado desde el 1/10 hasta el cierre del día elegido, según su meta.</li>
       <li><b>Hasta el jueves 15</b> (11 días hábiles) se reparte el 40% de la meta de M0 y el 70% de M1 y M2, parejo por día. <b>Del 16 al 30</b> (11 días hábiles) se reparte el resto.</li>
-      <li><b>Hoy debe convertir</b> = lo que le falta para la meta al 15 (o para la meta del mes, después del 15) dividido por los días hábiles que quedan, contando hoy y redondeado hacia arriba. Si un día convierte menos, al día siguiente le toca más.</li>
-      <li><b>Proyección</b> = a cuánto llega si sigue al ritmo que trae (lo que lleva ÷ días hábiles pasados × días hábiles hasta el 15). Verde: llega a la meta; amarillo: 90% a 99%; rojo: menos de 90%.</li>
-      <li>Son los mismos números que mandan los bots de Slack (Ritmo PDV y Productividad).</li>
+      <li><b>Ritmo de conversión</b>: no es lineal. Sale de agosto y septiembre de cada agente (los nuevos usan el promedio del equipo): M1 y M2 se convierten casi todo en la primera quincena y M0 se acelera hacia fin de mes.</li>
+      <li><b>Proyección a fin de mes</b> = lo que lleva hoy + lo que convertiría en los días hábiles que faltan siguiendo esa curva, al ritmo que trae. Los primeros días se apoya más en la meta y se va ajustando a medida que hay datos. Verde: llega a la meta; amarillo: 90% a 99%; rojo: menos de 90%.</li>
+      <li><b>Hoy debe convertir</b> = lo que le toca hoy según esa curva para cerrar el mes en el 100% de la meta. Si un día convierte menos, los días siguientes le toca más.</li>
+      <li>Las tarjetas por nivel usan la regla del checkpoint (40% / 70% al 15), igual que los bots de Slack.</li>
     </ul>
   </section>
 
@@ -343,11 +343,13 @@ function renderAgentes() {
   // Con pocos datos (primeros días) el ritmo se apoya en la meta (CRED = 10% de la meta) y se va ajustando.
   const CRED = 0.1;
   const proy = (v, meta, sk) => { const esp = meta * sk, c = CRED * meta; return v + meta * (1 - sk) * (v + c) / (esp + c); };
+  EQ = { meta: [0,0,0], lleva: [0,0,0], proy: [0,0,0], debe: [0,0,0], hayProy: !!AVANCE && kAv > 0, hayHoy };
   const dash = `<td class="sep muted">—</td><td class="muted">—</td><td class="muted">—</td>`;
   document.getElementById("tb").innerHTML = AGENTS.map(([name, m]) => {
     const cv = CURVAS[name] || CURVAS._global;
     const s = (i, k) => k <= 0 ? 0 : k >= HABILES.length ? 1 : cv[i][k - 1];
     const lleva = AVANCE && AVANCE[name] ? AVANCE[name] : (AVANCE ? [0, 0, 0] : null);
+    m.forEach((v, i) => { EQ.meta[i] += v; if (lleva) EQ.lleva[i] += lleva[i]; if (lleva && kAv > 0) EQ.proy[i] += proy(lleva[i], v, s(i, kAv)); });
     const celdasLleva = lleva ? lleva.map((v, i) => `<td class="acc${i === 0 ? " sep" : ""}">${v}</td>`).join("") : dash;
     const celdasProy = lleva && kAv > 0
       ? lleva.map((v, i) => `<td${i === 0 ? ' class="sep"' : ""}>${chip(proy(v, m[i], s(i, kAv)), m[i])}</td>`).join("")
@@ -357,6 +359,7 @@ function renderAgentes() {
       if (falta <= 0) return `<td class="inc${i === 0 ? " sep" : ""}">✓</td>`;
       const resto = 1 - s(i, kAv);
       const debe = resto > 0 ? Math.ceil(falta * (s(i, kHoy) - s(i, kAv)) / resto - 1e-9) : falta;
+      EQ.debe[i] += debe;
       const deberia = Math.ceil(ll + falta * (s(i, kHoy) - s(i, kAv)) / (resto || 1) - 1e-9);
       return `<td class="inc${i === 0 ? " sep" : ""}" title="Al cierre de hoy debería llevar ${deberia}">${debe}</td>`;
     }).join("") : dash;
@@ -365,21 +368,32 @@ function renderAgentes() {
       ${celdasLleva}${celdasProy}${celdasHoy}</tr>`;
   }).join("");
 }
-function renderNivel() {
-  const seg = document.getElementById("seg");
-  seg.innerHTML = NIVELES.map(n => `<button data-n="${n}" aria-pressed="${n === nivel}">Meta ${n}</button>`).join("");
-  seg.querySelectorAll("button").forEach(b => b.onclick = () => { nivel = b.dataset.n; try { localStorage.setItem("pdv-oct-nivel", nivel); } catch (e) {} renderNivel(); });
-  const m = nivel.split("/").map(Number);
-  document.getElementById("tbcal").innerHTML = HABILES.map(d => {
-    const a = acum(m, d), s = suma(m, d);
-    const cls = [d === DIA_CP ? "cprow" : "", d === sel ? "selrow" : ""].filter(Boolean).join(" ");
-    const tag = d === DIA_CP ? " · checkpoint" : d === HABILES[HABILES.length - 1] ? " · cierre" : "";
-    return `<tr class="${cls}"><td class="name">${fecha(d)}${tag}</td>
-      <td class="acc sep">${a[0]}</td><td class="acc">${a[1]}</td><td class="acc">${a[2]}</td>
-      <td class="inc sep">+${s[0]}</td><td class="inc">+${s[1]}</td><td class="inc">+${s[2]}</td></tr>`;
+let EQ = null;
+function renderEquipo() {
+  const dAv = AVANCE && AVANCE_AL ? +AVANCE_AL.slice(8, 10) : null;
+  document.getElementById("eqsub").textContent = `Suma de los ${AGENTS.length} agentes activos. "Lleva a hoy" es el acumulado${dAv ? ` al cierre del ${fecha(dAv)}` : ""}. `
+    + `La proyección y lo que hay que convertir hoy son la suma de las de cada agente (misma lógica de la tabla de arriba). El total pondera M0 30%, M1 40% y M2 30%.`;
+  const pc = (a, b) => b ? a / b * 100 : 0;
+  const cls = p => Math.round(p) >= 100 ? "ok" : Math.round(p) >= 90 ? "mid" : "hard";
+  const chip = (txt, p) => `<span class="chip ${cls(p)}" title="${Math.round(p)}% del objetivo"><span class="n">${txt}</span></span>`;
+  const fmt = n => Math.round(n).toLocaleString("es-AR");
+  let h = ["M0", "M1", "M2"].map((c, i) => {
+    const meta = EQ.meta[i], ll = EQ.lleva[i], pr = EQ.proy[i];
+    return `<tr><td class="name">${c} <span class="muted">(${PESOS[i] * 100}%)</span></td>
+      <td>${fmt(meta)}</td>
+      <td class="acc sep">${AVANCE ? fmt(ll) : "—"}</td>
+      <td class="sep">${fmt(Math.max(0, meta - ll))}</td>
+      <td class="sep">${AVANCE ? Math.round(pc(ll, meta)) + "%" : "—"}</td>
+      <td class="sep">${EQ.hayProy ? chip(fmt(pr), pc(pr, meta)) : "—"}</td>
+      <td class="inc sep">${EQ.hayHoy ? fmt(EQ.debe[i]) : "—"}</td></tr>`;
   }).join("");
+  const pond = a => PESOS.reduce((s, w, i) => s + w * pc(a[i], EQ.meta[i]), 0);
+  h += `<tr class="cprow"><td class="name">Total ponderado</td><td></td><td class="sep"></td><td class="sep"></td>
+    <td class="sep"><b>${AVANCE ? Math.round(pond(EQ.lleva)) + "%" : "—"}</b></td>
+    <td class="sep">${EQ.hayProy ? chip(Math.round(pond(EQ.proy)) + "%", pond(EQ.proy)) : "—"}</td><td class="sep"></td></tr>`;
+  document.getElementById("tbeq").innerHTML = h;
 }
-function render() { renderStatus(); renderCal(); renderTiles(); renderAgentes(); renderNivel(); }
+function render() { renderStatus(); renderCal(); renderTiles(); renderAgentes(); renderEquipo(); }
 document.getElementById("foot").textContent = `Agentes y metas tomados de la pestaña "Summary Oct" (20 agentes activos en octubre). Días hábiles: ${HABILES.length} (${D1} hasta el jueves 15 y ${D2} después), lunes a viernes, feriados incluidos. Valores redondeados al entero más cercano.`;
 render();
 </script>
