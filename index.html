@@ -195,7 +195,7 @@ tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)
       <li><b>Acumulado esperado</b> = lo que el agente debería llevar sumado desde el 1/10 hasta el cierre del día elegido, según su meta.</li>
       <li><b>Hasta el jueves 15</b> (11 días hábiles) se reparte el 40% de la meta de M0 y el 70% de M1 y M2, parejo por día. <b>Del 16 al 30</b> (11 días hábiles) se reparte el resto.</li>
       <li><b>Ritmo de conversión</b>: no es lineal. Sale de agosto y septiembre de cada agente (los nuevos usan el promedio del equipo): M1 y M2 se convierten casi todo en la primera quincena y M0 se acelera hacia fin de mes.</li>
-      <li><b>Proyección a fin de mes</b> = lo que lleva hoy + lo que convertiría en los días hábiles que faltan siguiendo esa curva, al ritmo que trae. Los primeros días se apoya más en la meta y se va ajustando a medida que hay datos. Verde: llega a la meta; amarillo: 90% a 99%; rojo: menos de 90%.</li>
+      <li><b>Proyección a fin de mes</b> = lo que lleva ÷ la parte del mes que su curva ya debería tener hoy (al ritmo que trae, lo que le queda por convertir en los días hábiles que faltan sigue la misma curva). Con 0 convertidos proyecta 0%. Los primeros días cambia mucho, sobre todo en M0. Verde: llega a la meta; amarillo: 90% a 99%; rojo: menos de 90%.</li>
       <li><b>Hoy debe convertir</b> = lo que le toca hoy según esa curva para cerrar el mes en el 100% de la meta. Si un día convierte menos, los días siguientes le toca más.</li>
       <li>Las tarjetas por nivel usan la regla del checkpoint (40% / 70% al 15), igual que los bots de Slack.</li>
     </ul>
@@ -330,7 +330,7 @@ function renderAgentes() {
     `"Meta total" es la meta del mes. "Lleva a hoy" es el acumulado desde el 1/10${dAv ? ` hasta el ${fecha(dAv)}` : ""}. `
     + `La conversión no es lineal: M1 y M2 se convierten casi todo en la primera quincena y M0 se acelera hacia el final. `
     + `Por eso usamos la curva real de agosto y septiembre de cada agente (y el promedio del equipo para los agentes nuevos), llevada al 100% de su meta. `
-    + `"Proyección" es a cuánto llega a fin de mes si sigue esa curva al ritmo que trae (lo que lleva vs lo que esperaba la curva a esta altura). Los primeros días, con pocos datos, se apoya más en la meta y se va ajustando a su ritmo real. `
+    + `"Proyección" es a cuánto llega a fin de mes al ritmo que trae: lo que lleva dividido por la parte del mes que su curva ya debería tener a esta altura. Los primeros días cambia mucho, sobre todo en M0, que casi no convierte al principio. `
     + `"Hoy debe convertir" es lo que le toca hoy según esa curva para cerrar el mes en el 100%.`
     + (AVANCE ? "" : " Lleva y proyección aparecen cuando haya datos de octubre.");
   document.getElementById("aglegend").hidden = !AVANCE;
@@ -339,10 +339,8 @@ function renderAgentes() {
     const cls = Math.round(p) >= 100 ? "ok" : Math.round(p) >= 90 ? "mid" : "hard";
     return `<span class="chip ${cls}" title="${Math.round(v)} de ${o}"><span class="n">${Math.round(p)}%</span></span>`;
   };
-  // Proyección: lo que lleva + lo que le falta del mes según su curva, al ritmo que trae vs lo esperado.
-  // Con pocos datos (primeros días) el ritmo se apoya en la meta (CRED = 10% de la meta) y se va ajustando.
-  const CRED = 0.1;
-  const proy = (v, meta, sk) => { const esp = meta * sk, c = CRED * meta; return v + meta * (1 - sk) * (v + c) / (esp + c); };
+  // Proyección: ritmo puro. Lo que lleva ÷ la parte del mes que su curva ya debería tener a esta altura.
+  const proy = (v, meta, sk) => sk > 0 ? v / sk : 0;
   EQ = { meta: [0,0,0], lleva: [0,0,0], proy: [0,0,0], debe: [0,0,0], hayProy: !!AVANCE && kAv > 0, hayHoy };
   const dash = `<td class="sep muted">—</td><td class="muted">—</td><td class="muted">—</td>`;
   document.getElementById("tb").innerHTML = AGENTS.map(([name, m]) => {
