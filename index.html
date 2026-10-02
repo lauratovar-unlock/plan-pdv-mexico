@@ -208,19 +208,29 @@ tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)
    AVANCE: lo que lleva cada agente, [M0, M1, M2], al cierre de AVANCE_AL.
    Mientras la planilla no tenga datos de octubre queda en null. */
 const AGENTS = [
-  ["Ismael Nazareno Barreto",[67,40,28]],["Kiara Florencia Robledo Ibarra",[67,40,28]],
-  ["Carolina Venguiarrutti",[67,40,28]],["Bella Falcones",[67,40,28]],
-  ["Ismael Chantir",[67,40,28]],["Gonzalo Gaston Garbarino Ibañez",[67,40,28]],
-  ["Jennifer Ledesma",[50,30,21]],["Denisse Sanabria",[50,30,21]],
-  ["Candela Rodriguez",[67,40,28]],["Irina Stanley",[67,40,28]],
-  ["Martiniano Suarez",[50,30,21]],["Aylen Jaubrena",[67,40,28]],
-  ["Tomas Sanchez Castro",[50,30,21]],["Bautista Lucchetti",[67,40,28]],
-  ["Ariana Anfuso",[50,30,21]],["Florencia Rey",[50,30,21]],
-  ["Santino Garcia",[48,29,20]],["Yanda Mosquera",[48,29,20]],
-  ["Angy Poveda",[40,24,17]],["Julieta Pastorini",[40,24,17]]
+  ["Ismael Nazareno Barreto",[67, 40, 28]],
+  ["Kiara Florencia Robledo Ibarra",[67, 40, 28]],
+  ["Carolina Venguiarrutti",[67, 40, 28]],
+  ["Bella Falcones",[67, 40, 28]],
+  ["Ismael Chantir",[67, 40, 28]],
+  ["Gonzalo Gaston Garbarino Ibañez",[67, 40, 28]],
+  ["Jennifer Ledesma",[50, 30, 21]],
+  ["Denisse Sanabria",[50, 30, 21]],
+  ["Candela Rodriguez",[67, 40, 28]],
+  ["Irina Stanley",[67, 40, 28]],
+  ["Martiniano Suarez",[50, 30, 21]],
+  ["Aylen Jaubrena",[67, 40, 28]],
+  ["Tomas Sanchez Castro",[50, 30, 21]],
+  ["Bautista Lucchetti",[67, 40, 28]],
+  ["Ariana Anfuso",[50, 30, 21]],
+  ["Florencia Rey",[50, 30, 21]],
+  ["Santino Garcia",[48, 29, 20]],
+  ["Yanda Mosquera",[48, 29, 20]],
+  ["Angy Poveda",[40, 24, 17]],
+  ["Julieta Pastorini",[40, 24, 17]]
 ];
-const AVANCE = null;      // ej. {"Bella Falcones":[5,6,4], ...}
-const AVANCE_AL = null;   // ej. "2026-10-05" (último día con datos completos)
+const AVANCE = {"Ismael Nazareno Barreto":[0,5,6],"Kiara Florencia Robledo Ibarra":[0,5,2],"Carolina Venguiarrutti":[0,5,5],"Bella Falcones":[0,10,1],"Ismael Chantir":[0,5,8],"Gonzalo Gaston Garbarino Ibañez":[0,3,3],"Jennifer Ledesma":[1,5,6],"Denisse Sanabria":[0,3,6],"Candela Rodriguez":[0,0,2],"Irina Stanley":[0,2,2],"Martiniano Suarez":[0,8,4],"Aylen Jaubrena":[0,5,1],"Tomas Sanchez Castro":[0,5,7],"Bautista Lucchetti":[0,4,7],"Ariana Anfuso":[1,1,3],"Florencia Rey":[0,3,3],"Santino Garcia":[0,6,2],"Yanda Mosquera":[0,5,0],"Angy Poveda":[0,0,0],"Julieta Pastorini":[0,0,0]};
+const AVANCE_AL = "2026-10-01";
 
 /* ── Lógica de metas (igual que metas.py de los bots) ─────────────────── */
 const YEAR = 2026, MONTH = 9; // octubre (0-based)
