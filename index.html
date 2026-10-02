@@ -337,7 +337,7 @@ function renderAgentes() {
   const chip = (v, o) => {
     const p = o ? v / o * 100 : 100;
     const cls = Math.round(p) >= 100 ? "ok" : Math.round(p) >= 90 ? "mid" : "hard";
-    return `<span class="chip ${cls}" title="${Math.round(p)}% de la meta"><span class="n">${Math.round(v)}</span></span>`;
+    return `<span class="chip ${cls}" title="${Math.round(v)} de ${o}"><span class="n">${Math.round(p)}%</span></span>`;
   };
   // Proyección: lo que lleva + lo que le falta del mes según su curva, al ritmo que trae vs lo esperado.
   // Con pocos datos (primeros días) el ritmo se apoya en la meta (CRED = 10% de la meta) y se va ajustando.
