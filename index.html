@@ -384,7 +384,7 @@ function renderEquipo() {
       <td class="acc sep">${AVANCE ? fmt(ll) : "—"}</td>
       <td class="sep">${fmt(Math.max(0, meta - ll))}</td>
       <td class="sep">${AVANCE ? Math.round(pc(ll, meta)) + "%" : "—"}</td>
-      <td class="sep">${EQ.hayProy ? chip(fmt(pr), pc(pr, meta)) : "—"}</td>
+      <td class="sep">${EQ.hayProy ? chip(Math.round(pc(pr, meta)) + "%", pc(pr, meta)).replace("% del objetivo", "% del objetivo (" + fmt(pr) + ")") : "—"}</td>
       <td class="inc sep">${EQ.hayHoy ? fmt(EQ.debe[i]) : "—"}</td></tr>`;
   }).join("");
   const pond = a => PESOS.reduce((s, w, i) => s + w * pc(a[i], EQ.meta[i]), 0);
