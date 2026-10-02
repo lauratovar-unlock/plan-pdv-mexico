@@ -330,7 +330,7 @@ function renderAgentes() {
     `"Meta total" es la meta del mes. "Lleva a hoy" es el acumulado desde el 1/10${dAv ? ` hasta el ${fecha(dAv)}` : ""}. `
     + `La conversión no es lineal: M1 y M2 se convierten casi todo en la primera quincena y M0 se acelera hacia el final. `
     + `Por eso usamos la curva real de agosto y septiembre de cada agente (y el promedio del equipo para los agentes nuevos), llevada al 100% de su meta. `
-    + `"Proyección" es a cuánto llega a fin de mes si sigue esa curva desde lo que lleva hoy. `
+    + `"Proyección" es a cuánto llega a fin de mes si sigue esa curva al ritmo que trae (lo que lleva vs lo que esperaba la curva a esta altura). Los primeros días, con pocos datos, se apoya más en la meta y se va ajustando a su ritmo real. `
     + `"Hoy debe convertir" es lo que le toca hoy según esa curva para cerrar el mes en el 100%.`
     + (AVANCE ? "" : " Lleva y proyección aparecen cuando haya datos de octubre.");
   document.getElementById("aglegend").hidden = !AVANCE;
@@ -339,6 +339,10 @@ function renderAgentes() {
     const cls = Math.round(p) >= 100 ? "ok" : Math.round(p) >= 90 ? "mid" : "hard";
     return `<span class="chip ${cls}" title="${Math.round(p)}% de la meta"><span class="n">${Math.round(v)}</span></span>`;
   };
+  // Proyección: lo que lleva + lo que le falta del mes según su curva, al ritmo que trae vs lo esperado.
+  // Con pocos datos (primeros días) el ritmo se apoya en la meta (CRED = 10% de la meta) y se va ajustando.
+  const CRED = 0.1;
+  const proy = (v, meta, sk) => { const esp = meta * sk, c = CRED * meta; return v + meta * (1 - sk) * (v + c) / (esp + c); };
   const dash = `<td class="sep muted">—</td><td class="muted">—</td><td class="muted">—</td>`;
   document.getElementById("tb").innerHTML = AGENTS.map(([name, m]) => {
     const cv = CURVAS[name] || CURVAS._global;
@@ -346,7 +350,7 @@ function renderAgentes() {
     const lleva = AVANCE && AVANCE[name] ? AVANCE[name] : (AVANCE ? [0, 0, 0] : null);
     const celdasLleva = lleva ? lleva.map((v, i) => `<td class="acc${i === 0 ? " sep" : ""}">${v}</td>`).join("") : dash;
     const celdasProy = lleva && kAv > 0
-      ? lleva.map((v, i) => `<td${i === 0 ? ' class="sep"' : ""}>${chip(v / s(i, kAv), m[i])}</td>`).join("")
+      ? lleva.map((v, i) => `<td${i === 0 ? ' class="sep"' : ""}>${chip(proy(v, m[i], s(i, kAv)), m[i])}</td>`).join("")
       : dash;
     const celdasHoy = hayHoy ? m.map((meta, i) => {
       const ll = lleva ? lleva[i] : 0, falta = meta - ll;
