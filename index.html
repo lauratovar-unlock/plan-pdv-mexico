@@ -334,7 +334,7 @@ function renderAgentes() {
     + `"Si seguís a este ritmo" es un PRONÓSTICO pasivo (no una meta): a cuánto llega a fin de mes si de acá a fin de mes sigue exactamente con el ritmo que trae. Los primeros días cambia mucho, sobre todo en M0, que casi no convierte al principio. `
     + `"Hoy debe convertir" es la única cifra que importa para actuar: lo que le toca convertir hoy, sin importar el pronóstico, para cerrar el mes en el 100%. `
     + `Estas dos columnas NO se contradicen: un pronóstico de 91% no es "ya casi, tranquilo" — igual hace falta convertir lo que diga "Hoy debe convertir". `
-    + `"Semáforo" combina M0+M1+M2 (30/40/30, igual que el total del equipo) en un solo número — pasá el mouse para ver cuál de los tres cohorts está atrasando más.`
+    + `"Semáforo" combina M0+M1+M2 (30/40/30, igual que el total del equipo) en un solo número, con el desglose por cohort y qué reforzar escritos debajo.`
     + (AVANCE ? "" : " Lleva, pronóstico y semáforo aparecen cuando haya datos de octubre.");
   document.getElementById("aglegend").hidden = !AVANCE;
   const chip = (v, o, detalle) => {
@@ -377,16 +377,19 @@ function renderAgentes() {
     }).join("") : dash;
     // Semáforo combinado (pedido de Lau: que de un vistazo se sepa si hay que actuar, y en
     // qué cohort) — misma ponderación 30/40/30 que ya usa el total del equipo, pero por
-    // agente. El tooltip nombra el cohort que más atrasa, para apuntar la acción.
+    // agente.
+    // FIX real (7/10/26, Lau: "yo paso el mouse pero no veo el %") — el desglose vivía
+    // SOLO en el title (tooltip nativo), que tiene demora y en algunos navegadores/trackpads
+    // no llega a disparar. Ahora el desglose va SIEMPRE visible como texto chico debajo del
+    // chip, no escondido detrás de un hover.
     let celdaSemaforo = `<td class="sep muted">—</td>`;
     if (lleva && kAv > 0) {
       const pondAgente = PESOS.reduce((acc, w, i) => acc + w * pctCohort(i), 0);
       const porCohort = [0, 1, 2].map(i => ({ k: ["M0", "M1", "M2"][i], p: pctCohort(i) }));
       const peor = porCohort.slice().sort((a, b) => a.p - b.p)[0];
-      const detalleSem = pondAgente >= 100
-        ? `Vas bien en los tres: M0 ${Math.round(porCohort[0].p)}% · M1 ${Math.round(porCohort[1].p)}% · M2 ${Math.round(porCohort[2].p)}%.`
-        : `M0 ${Math.round(porCohort[0].p)}% · M1 ${Math.round(porCohort[1].p)}% · M2 ${Math.round(porCohort[2].p)}%. El que más atrasa: ${peor.k} (${Math.round(peor.p)}%) — reforzalo hoy.`;
-      celdaSemaforo = `<td class="sep">${chip(pondAgente, 100, detalleSem)}</td>`;
+      const desglose = porCohort.map(c => `${c.k} ${Math.round(c.p)}%`).join(" · ");
+      const accion = pondAgente >= 100 ? "Vas bien en los tres." : `Reforzar ${peor.k} hoy.`;
+      celdaSemaforo = `<td class="sep">${chip(pondAgente, 100, desglose)}<div style="font-size:.68rem;color:var(--muted);margin-top:3px;line-height:1.3">${desglose}<br><b style="color:var(--ink)">${accion}</b></div></td>`;
     }
     return `<tr><td class="name">${name}</td>
       ${celdaSemaforo}
