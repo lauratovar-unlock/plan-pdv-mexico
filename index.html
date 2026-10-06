@@ -334,7 +334,7 @@ function renderAgentes() {
     + `"Si seguís a este ritmo" es un PRONÓSTICO pasivo (no una meta): a cuánto llega a fin de mes si de acá a fin de mes sigue exactamente con el ritmo que trae. Los primeros días cambia mucho, sobre todo en M0, que casi no convierte al principio. `
     + `"Hoy debe convertir" es la única cifra que importa para actuar: lo que le toca convertir hoy, sin importar el pronóstico, para cerrar el mes en el 100%. `
     + `Estas dos columnas NO se contradicen: un pronóstico de 91% no es "ya casi, tranquilo" — igual hace falta convertir lo que diga "Hoy debe convertir". `
-    + `"Semáforo" combina M0+M1+M2 (30/40/30, igual que el total del equipo) en un solo número, con el desglose por cohort y qué reforzar escritos debajo.`
+    + `"Semáforo" muestra el promedio ponderado M0+M1+M2 (30/40/30, igual que el total del equipo) como número, pero el COLOR y el "reforzar X" salen del peor de los tres cohorts, no del promedio — un cohort muy alto no puede tapar a uno roto. Desglose siempre debajo.`
     + (AVANCE ? "" : " Lleva, pronóstico y semáforo aparecen cuando haya datos de octubre.");
   document.getElementById("aglegend").hidden = !AVANCE;
   const chip = (v, o, detalle) => {
@@ -382,14 +382,21 @@ function renderAgentes() {
     // SOLO en el title (tooltip nativo), que tiene demora y en algunos navegadores/trackpads
     // no llega a disparar. Ahora el desglose va SIEMPRE visible como texto chico debajo del
     // chip, no escondido detrás de un hover.
+    // FIX real #2 (7/10/26, Lau: "mira a Jen" — M0 167% / M1 41% / M2 115%, el promedio
+    // pondera 30/40/30 da 101%, y el chip decía "Vas bien en los tres" con un 41% ahí mismo
+    // al lado: un cohort muy alto tapaba a uno muy bajo). El COLOR y el veredicto del
+    // semáforo ahora salen del PEOR de los tres cohorts, no del promedio — el promedio
+    // puede ocultar un cohort roto, el peor no.
     let celdaSemaforo = `<td class="sep muted">—</td>`;
     if (lleva && kAv > 0) {
       const pondAgente = PESOS.reduce((acc, w, i) => acc + w * pctCohort(i), 0);
       const porCohort = [0, 1, 2].map(i => ({ k: ["M0", "M1", "M2"][i], p: pctCohort(i) }));
       const peor = porCohort.slice().sort((a, b) => a.p - b.p)[0];
       const desglose = porCohort.map(c => `${c.k} ${Math.round(c.p)}%`).join(" · ");
-      const accion = pondAgente >= 100 ? "Vas bien en los tres." : `Reforzar ${peor.k} hoy.`;
-      celdaSemaforo = `<td class="sep">${chip(pondAgente, 100, desglose)}<div style="font-size:.68rem;color:var(--muted);margin-top:3px;line-height:1.3">${desglose}<br><b style="color:var(--ink)">${accion}</b></div></td>`;
+      const todosBien = porCohort.every(c => Math.round(c.p) >= 100);
+      const clsSem = peor.p >= 100 ? "ok" : peor.p >= 90 ? "mid" : "hard";
+      const accion = todosBien ? "Vas bien en los tres." : `Reforzar ${peor.k} hoy.`;
+      celdaSemaforo = `<td class="sep"><span class="chip ${clsSem}" title="${desglose}"><span class="n">${Math.round(pondAgente)}%</span></span><div style="font-size:.68rem;color:var(--muted);margin-top:3px;line-height:1.3">${desglose}<br><b style="color:var(--ink)">${accion}</b></div></td>`;
     }
     return `<tr><td class="name">${name}</td>
       ${celdaSemaforo}
