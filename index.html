@@ -141,7 +141,7 @@ tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)
     <h2>Cuánto debería llevar cada agente</h2>
     <p class="sub" id="agsub"></p>
     <div class="legend" id="aglegend" hidden>
-      <span>Proyección a fin de mes:</span>
+      <span>Si seguís a este ritmo (pronóstico, no es una meta en sí):</span>
       <span><i class="sw" style="background:var(--ok-bg);outline:1px solid var(--ok)"></i>Llega a la meta</span>
       <span><i class="sw" style="background:var(--mid-bg);outline:1px solid var(--mid)"></i>Cerca (90% a 99%)</span>
       <span><i class="sw" style="background:var(--hard-bg);outline:1px solid var(--hard)"></i>No llega (menos de 90%)</span>
@@ -151,10 +151,11 @@ tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)
         <thead>
           <tr class="grp">
             <th class="name" rowspan="2">Agente</th>
+            <th rowspan="2" class="sep">Semáforo<span class="o">M0+M1+M2</span></th>
             <th colspan="3">Meta total<span class="o">del mes</span></th>
             <th colspan="3" class="sep">Lleva a hoy<span class="o" id="thlleva">total acumulado</span></th>
-            <th colspan="3" class="sep">Proyección a fin de mes</th>
-            <th colspan="3" class="sep">Hoy debe convertir<span class="o" id="thhoy">para llegar al 100%</span></th>
+            <th colspan="3" class="sep">Si seguís a este ritmo<span class="o">pronóstico pasivo, no es la meta</span></th>
+            <th colspan="3" class="sep">Hoy debe convertir<span class="o" id="thhoy">esto es lo que hay que hacer</span></th>
           </tr>
           <tr>
             <th>M0</th><th>M1</th><th>M2</th>
@@ -180,8 +181,8 @@ tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)
             <th class="sep">Lleva a hoy</th>
             <th class="sep">Faltantes para el objetivo</th>
             <th class="sep">% del objetivo actual</th>
-            <th class="sep">Proyección a fin de mes</th>
-            <th class="sep">Hoy debe convertir</th>
+            <th class="sep">Si seguís a este ritmo (pronóstico)</th>
+            <th class="sep">Hoy debe convertir (la acción)</th>
           </tr>
         </thead>
         <tbody id="tbeq"></tbody>
@@ -195,8 +196,8 @@ tr.selrow td{box-shadow:inset 0 2px 0 var(--accent),inset 0 -2px 0 var(--accent)
       <li><b>Acumulado esperado</b> = lo que el agente debería llevar sumado desde el 1/10 hasta el cierre del día elegido, según su meta.</li>
       <li><b>Hasta el jueves 15</b> (11 días hábiles) se reparte el 40% de la meta de M0 y el 70% de M1 y M2, parejo por día. <b>Del 16 al 30</b> (11 días hábiles) se reparte el resto.</li>
       <li><b>Ritmo de conversión</b>: no es lineal. Sale de agosto y septiembre de cada agente (los nuevos usan el promedio del equipo): M1 y M2 se convierten casi todo en la primera quincena y M0 se acelera hacia fin de mes.</li>
-      <li><b>Proyección a fin de mes</b> = lo que lleva ÷ la parte del mes que su curva ya debería tener hoy (al ritmo que trae, lo que le queda por convertir en los días hábiles que faltan sigue la misma curva). Con 0 convertidos proyecta 0%. Los primeros días cambia mucho, sobre todo en M0. Verde: llega a la meta; amarillo: 90% a 99%; rojo: menos de 90%.</li>
-      <li><b>Hoy debe convertir</b> = lo que le toca hoy según esa curva para cerrar el mes en el 100% de la meta. Si un día convierte menos, los días siguientes le toca más.</li>
+      <li><b>Si seguís a este ritmo</b> = un PRONÓSTICO pasivo, no una meta: lo que lleva ÷ la parte del mes que su curva ya debería tener hoy (si de acá a fin de mes sigue exactamente con el mismo ritmo que trajo hasta ahora). Con 0 convertidos proyecta 0%. Los primeros días cambia mucho, sobre todo en M0. Verde: llega a la meta; amarillo: 90% a 99% (igual hace falta actuar, no es "está bien"); rojo: menos de 90%.</li>
+      <li><b>Hoy debe convertir</b> = la ÚNICA cifra que importa para actuar hoy: lo que le toca convertir hoy, sin importar el pronóstico de arriba, para cerrar el mes en el 100% de la meta. Si un día convierte menos, los días siguientes le toca más. <b>Estas dos columnas no se contradicen</b>: "Si seguís a este ritmo" dice dónde terminás si no cambiás nada; "Hoy debe convertir" dice qué hacer hoy para que eso no pase. Que el pronóstico diga 91% no significa "ya casi, tranquilo" — significa que todavía falta algo, y esa columna te dice exactamente cuánto.</li>
       <li>Las tarjetas por nivel usan la regla del checkpoint (40% / 70% al 15), igual que los bots de Slack.</li>
     </ul>
   </section>
@@ -325,19 +326,21 @@ function renderAgentes() {
   const kHoy = idx(HOY);
   const hayHoy = kHoy > kAv;
   document.getElementById("thlleva").textContent = dAv ? `al cierre del ${fecha(dAv)}` : "total acumulado";
-  document.getElementById("thhoy").textContent = hayHoy ? `${fecha(HOY)}, para llegar al 100%` : "para llegar al 100%";
+  document.getElementById("thhoy").textContent = hayHoy ? `${fecha(HOY)}, esto es lo que hay que hacer` : "esto es lo que hay que hacer";
   document.getElementById("agsub").textContent =
     `"Meta total" es la meta del mes. "Lleva a hoy" es el acumulado desde el 1/10${dAv ? ` hasta el ${fecha(dAv)}` : ""}. `
     + `La conversión no es lineal: M1 y M2 se convierten casi todo en la primera quincena y M0 se acelera hacia el final. `
     + `Por eso usamos la curva real de agosto y septiembre de cada agente (y el promedio del equipo para los agentes nuevos), llevada al 100% de su meta. `
-    + `"Proyección" es a cuánto llega a fin de mes al ritmo que trae: lo que lleva dividido por la parte del mes que su curva ya debería tener a esta altura. Los primeros días cambia mucho, sobre todo en M0, que casi no convierte al principio. `
-    + `"Hoy debe convertir" es lo que le toca hoy según esa curva para cerrar el mes en el 100%.`
-    + (AVANCE ? "" : " Lleva y proyección aparecen cuando haya datos de octubre.");
+    + `"Si seguís a este ritmo" es un PRONÓSTICO pasivo (no una meta): a cuánto llega a fin de mes si de acá a fin de mes sigue exactamente con el ritmo que trae. Los primeros días cambia mucho, sobre todo en M0, que casi no convierte al principio. `
+    + `"Hoy debe convertir" es la única cifra que importa para actuar: lo que le toca convertir hoy, sin importar el pronóstico, para cerrar el mes en el 100%. `
+    + `Estas dos columnas NO se contradicen: un pronóstico de 91% no es "ya casi, tranquilo" — igual hace falta convertir lo que diga "Hoy debe convertir". `
+    + `"Semáforo" combina M0+M1+M2 (30/40/30, igual que el total del equipo) en un solo número — pasá el mouse para ver cuál de los tres cohorts está atrasando más.`
+    + (AVANCE ? "" : " Lleva, pronóstico y semáforo aparecen cuando haya datos de octubre.");
   document.getElementById("aglegend").hidden = !AVANCE;
-  const chip = (v, o) => {
+  const chip = (v, o, detalle) => {
     const p = o ? v / o * 100 : 100;
     const cls = Math.round(p) >= 100 ? "ok" : Math.round(p) >= 90 ? "mid" : "hard";
-    return `<span class="chip ${cls}" title="${Math.round(v)} de ${o}"><span class="n">${Math.round(p)}%</span></span>`;
+    return `<span class="chip ${cls}" title="${detalle || (Math.round(v) + " de " + o)}"><span class="n">${Math.round(p)}%</span></span>`;
   };
   // Proyección: ritmo puro. Lo que lleva ÷ la parte del mes que su curva ya debería tener a esta altura.
   const proy = (v, meta, sk) => sk > 0 ? v / sk : 0;
@@ -348,9 +351,20 @@ function renderAgentes() {
     const s = (i, k) => k <= 0 ? 0 : k >= HABILES.length ? 1 : cv[i][k - 1];
     const lleva = AVANCE && AVANCE[name] ? AVANCE[name] : (AVANCE ? [0, 0, 0] : null);
     m.forEach((v, i) => { EQ.meta[i] += v; if (lleva) EQ.lleva[i] += lleva[i]; if (lleva && kAv > 0) EQ.proy[i] += proy(lleva[i], v, s(i, kAv)); });
+    // % proyectado por cohort, sin topar en 100 (igual que hace el total del equipo) — se
+    // reusa para el chip individual de M0/M1/M2 y para el semáforo combinado de abajo.
+    const pctCohort = i => m[i] ? proy(lleva[i], m[i], s(i, kAv)) / m[i] * 100 : 0;
     const celdasLleva = lleva ? lleva.map((v, i) => `<td class="acc${i === 0 ? " sep" : ""}">${v}</td>`).join("") : dash;
+    // Pedido de Lau (7/10/2026, caso Ismael 91% vs Bella 140% con el mismo "lleva 3"):
+    // "el % debe ser claro para el agente" — el tooltip de cada chip ahora explica, en una
+    // frase, CONTRA QUÉ se compara (el propio ritmo de ago/sep a esta altura del mes), no
+    // solo "listo/no listo". Antes solo decía "3 de 67".
     const celdasProy = lleva && kAv > 0
-      ? lleva.map((v, i) => `<td${i === 0 ? ' class="sep"' : ""}>${chip(proy(v, m[i], s(i, kAv)), m[i])}</td>`).join("")
+      ? lleva.map((v, i) => {
+          const esperadoCurva = (s(i, kAv) * m[i]).toFixed(1);
+          const detalle = `Lleva ${v} de meta ${m[i]}. Según tu propio ritmo de ago/sep, a esta altura del mes solías llevar ${esperadoCurva} — por eso el pronóstico da ${Math.round(pctCohort(i))}% (esto no es una meta, es "si seguís así"; la acción de hoy está en la columna de la derecha).`;
+          return `<td${i === 0 ? ' class="sep"' : ""}>${chip(proy(v, m[i], s(i, kAv)), m[i], detalle)}</td>`;
+        }).join("")
       : dash;
     const celdasHoy = hayHoy ? m.map((meta, i) => {
       const ll = lleva ? lleva[i] : 0, falta = meta - ll;
@@ -361,7 +375,21 @@ function renderAgentes() {
       const deberia = Math.ceil(ll + falta * (s(i, kHoy) - s(i, kAv)) / (resto || 1) - 1e-9);
       return `<td class="inc${i === 0 ? " sep" : ""}" title="Al cierre de hoy debería llevar ${deberia}">${debe}</td>`;
     }).join("") : dash;
+    // Semáforo combinado (pedido de Lau: que de un vistazo se sepa si hay que actuar, y en
+    // qué cohort) — misma ponderación 30/40/30 que ya usa el total del equipo, pero por
+    // agente. El tooltip nombra el cohort que más atrasa, para apuntar la acción.
+    let celdaSemaforo = `<td class="sep muted">—</td>`;
+    if (lleva && kAv > 0) {
+      const pondAgente = PESOS.reduce((acc, w, i) => acc + w * pctCohort(i), 0);
+      const porCohort = [0, 1, 2].map(i => ({ k: ["M0", "M1", "M2"][i], p: pctCohort(i) }));
+      const peor = porCohort.slice().sort((a, b) => a.p - b.p)[0];
+      const detalleSem = pondAgente >= 100
+        ? `Vas bien en los tres: M0 ${Math.round(porCohort[0].p)}% · M1 ${Math.round(porCohort[1].p)}% · M2 ${Math.round(porCohort[2].p)}%.`
+        : `M0 ${Math.round(porCohort[0].p)}% · M1 ${Math.round(porCohort[1].p)}% · M2 ${Math.round(porCohort[2].p)}%. El que más atrasa: ${peor.k} (${Math.round(peor.p)}%) — reforzalo hoy.`;
+      celdaSemaforo = `<td class="sep">${chip(pondAgente, 100, detalleSem)}</td>`;
+    }
     return `<tr><td class="name">${name}</td>
+      ${celdaSemaforo}
       ${m.map(v => `<td>${v}</td>`).join("")}
       ${celdasLleva}${celdasProy}${celdasHoy}</tr>`;
   }).join("");
@@ -370,7 +398,7 @@ let EQ = null;
 function renderEquipo() {
   const dAv = AVANCE && AVANCE_AL ? +AVANCE_AL.slice(8, 10) : null;
   document.getElementById("eqsub").textContent = `Suma de los ${AGENTS.length} agentes activos. "Lleva a hoy" es el acumulado${dAv ? ` al cierre del ${fecha(dAv)}` : ""}. `
-    + `La proyección y lo que hay que convertir hoy son la suma de las de cada agente (misma lógica de la tabla de arriba). El total pondera M0 30%, M1 40% y M2 30%.`;
+    + `El pronóstico y lo que hay que convertir hoy son la suma de los de cada agente (misma lógica de la tabla de arriba). El total pondera M0 30%, M1 40% y M2 30%.`;
   const pc = (a, b) => b ? a / b * 100 : 0;
   const cls = p => Math.round(p) >= 100 ? "ok" : Math.round(p) >= 90 ? "mid" : "hard";
   const chip = (txt, p) => `<span class="chip ${cls(p)}" title="${Math.round(p)}% del objetivo"><span class="n">${txt}</span></span>`;
