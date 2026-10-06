@@ -432,17 +432,6 @@ function renderEquipo() {
 function render() { renderStatus(); renderCal(); renderTiles(); renderAgentes(); renderEquipo(); }
 document.getElementById("foot").textContent = `Agentes y metas tomados de la pestaña "Summary Oct" (20 agentes activos en octubre). Días hábiles: ${HABILES.length} (${D1} hasta el jueves 15 y ${D2} después), lunes a viernes, feriados incluidos. Valores redondeados al entero más cercano.`;
 render();
-
-// Pedido de Lau (7/10/2026): "lo que lleva a hoy se puede sumar en altas" — cuando esta
-// página se abre adentro de un iframe (el playbook de Iri, pestaña "Mi ritmo"), le avisa
-// a la página que la contiene cuál es el AVANCE real de cada agente, para que ese otro
-// lado pueda autocompletar "Tus altas de hoy" en vez de cargarlo a mano todos los días.
-// No rompe nada si se abre suelta (afuera de un iframe no hay nadie escuchando).
-try {
-  if (window.parent !== window) {
-    window.parent.postMessage({ source: "pdv-plan", avance: AVANCE || null, avanceAl: AVANCE_AL || null }, "*");
-  }
-} catch (e) {}
 </script>
 </body>
 </html>
